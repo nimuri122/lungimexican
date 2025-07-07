@@ -119,7 +119,7 @@ export const Desktop = (): JSX.Element => {
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
           <div className="text-center">
             <img
-              src="/public/Enhanced Image 1 (2).png"
+              src="/Enhanced Image 1 (2).png"
               alt="Lungi Restaurant Logo"
               className="h-32 w-auto mx-auto mb-8 animate-pulse"
             />
@@ -134,7 +134,7 @@ export const Desktop = (): JSX.Element => {
             {/* Logo */}
             <div className="flex items-center">
               <img
-                src="/public/Enhanced Image 1 (2).png"
+                src="/Enhanced Image 1 (2).png"
                 alt="Lungi Restaurant Logo"
                 className="h-12 w-auto md:h-16 object-contain"
               />
@@ -199,7 +199,7 @@ export const Desktop = (): JSX.Element => {
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center">
                 <img
-                  src="/public/Enhanced Image 1 (2).png"
+                  src="/Enhanced Image 1 (2).png"
                   alt="Lungi Restaurant Logo"
                   className="h-10 w-auto object-contain"
                 />
@@ -647,7 +647,7 @@ export const Desktop = (): JSX.Element => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex items-center justify-center">
               <img
-                src="/public/Snapchat.jpg"
+                src="/Snapchat.jpg"
                 alt="LUNGI Logo"
                 className="h-16 w-16 md:h-20 md:w-20 rounded-full shadow-lg"
               />
