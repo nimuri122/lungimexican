@@ -13,6 +13,7 @@ export const Desktop = (): JSX.Element => {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
   // Navigation menu items
   const navItems = [
@@ -32,14 +33,253 @@ export const Desktop = (): JSX.Element => {
     },
   ];
 
-  // Menu categories
-  const menuCategories = [
-    { emoji: "🌮", name: "TACOT" },
-    { emoji: "🌯", name: "BURRITOT" },
-    { emoji: "🫔", name: "ENCHILADAT" },
-    { emoji: "🥑", name: "GUACAMOLE JA DIPIT" },
-    { emoji: "🧃", name: "VIRVOKKEET JA JÄLKIRUOAT" },
-  ];
+  // Detailed menu data
+  const menuData = {
+    burrito: {
+      emoji: "🌯",
+      name: "BURRITO",
+      items: [
+        {
+          name: "FRESH CHICKEN BURRITO",
+          description: "Nyhtokanaa, riisi, cheddarjuusto, salaatti, pico de gallo, sitruunamajonesi ja guacamole",
+          price: "12,50€"
+        },
+        {
+          name: "SWEET PORK BURRITO",
+          description: "Possunniskaa, riisi, cheddarjuusto, salaatti, ananas, creme fraiche, salsa verde ja paprikamajonesi",
+          price: "12,00€"
+        },
+        {
+          name: "BEEFY BEEF BURRITO",
+          description: "Naudanlihaa, riisi, cheddarjuusto, salaatti, sweet corn and pea, chilimajonesi",
+          price: "13,50€"
+        },
+        {
+          name: "GREEN BURRITO BURRITO",
+          description: "Seitan, riisi, cheddarjuusto, salaatti, pico de gallo ja valkosipulimajonesi",
+          price: "11,00€"
+        },
+        {
+          name: "OMAVALINTA, BURRITO NYHTOKANALLA",
+          description: "",
+          price: "12,50€"
+        },
+        {
+          name: "OMAVALINTA, BURRITO POSSUNNISKALLA",
+          description: "",
+          price: "12,00€"
+        },
+        {
+          name: "OMAVALINTA, BURRITO NAUDANLIHALLA",
+          description: "",
+          price: "13,50€"
+        },
+        {
+          name: "OMAVALINTA, BURRITO SEITANILLA",
+          description: "",
+          price: "11,00€"
+        }
+      ]
+    },
+    quesadilla: {
+      emoji: "🫔",
+      name: "QUESADILLA",
+      items: [
+        {
+          name: "FRESH CHICKEN QUESADILLA",
+          description: "Nyhtokanaa, cheddarjuusto, pico de gallo, sitruunamajonesi ja guacamole",
+          price: "12,50€"
+        },
+        {
+          name: "SWEET PORK QUESADILLA",
+          description: "Possunniska, cheddarjuusto, ananas, creme fraiche, salsa verde ja paprikamajonesi",
+          price: "12,00€"
+        },
+        {
+          name: "BEEFY BEEF QUESADILLA",
+          description: "Naudanliha, cheddarjuusto, sweet corn and pea ja chilimajonesi",
+          price: "13,50€"
+        },
+        {
+          name: "GREEN QUESADILLA QUESADILLA",
+          description: "Seitan, cheddarjuusto, pico de gallo ja valkosipulimajonesi",
+          price: "11,00€"
+        },
+        {
+          name: "OMAVALINTA, QUESADILLA NYHTOKANALLA",
+          description: "",
+          price: "12,50€"
+        },
+        {
+          name: "OMAVALINTA, QUESADILLA POSSUNNISKALLA",
+          description: "",
+          price: "12,00€"
+        },
+        {
+          name: "OMAVALINTA, QUESADILLA NAUDANLIHALLA",
+          description: "",
+          price: "13,50€"
+        },
+        {
+          name: "OMAVALINTA, QUESADILLA SEITANILLA",
+          description: "",
+          price: "11,00€"
+        }
+      ]
+    },
+    taco: {
+      emoji: "🌮",
+      name: "TACO",
+      items: [
+        {
+          name: "FRESH CHICKEN TACO",
+          description: "Nyhtokanaa, cheddarjuusto, pico de gallo, sitruunamajonesi ja guacamole",
+          price: "12,50€"
+        },
+        {
+          name: "SWEET PORK TACO",
+          description: "Possunniska, cheddarjuusto, ananas, creme fraiche, salsa verde ja paprikamajonesi",
+          price: "12,00€"
+        },
+        {
+          name: "BEEFY BEEF TACO",
+          description: "Naudanliha, cheddarjuusto, sweet corn and pea, chilimajonesi",
+          price: "13,50€"
+        },
+        {
+          name: "GREEN TACO TACO",
+          description: "Seitan, cheddarjuusto, pico de gallo, valkosipulimajonesi",
+          price: "11,00€"
+        },
+        {
+          name: "OMAVALINTA, TACO NYHTOKANALLA",
+          description: "",
+          price: "12,50€"
+        },
+        {
+          name: "OMAVALINTA, TACO POSSUNNISKALLA",
+          description: "",
+          price: "12,00€"
+        },
+        {
+          name: "OMAVALINTA, TACO NAUDANLIHALLA",
+          description: "",
+          price: "13,50€"
+        },
+        {
+          name: "OMAVALINTA, TACO SEITANILLA",
+          description: "",
+          price: "11,00€"
+        }
+      ],
+      note: "SISÄLTÄÄ 3 TACOA JA MAISSIN"
+    },
+    pihvi: {
+      emoji: "🥩",
+      name: "PIHVI",
+      items: [
+        {
+          name: "JAUHELIHAPIHVI",
+          description: "Uunissa paistettu kanajauhelihapihvi 200g, riisillä, lohkoperunoilla tai leivälla, talon kastike, salaatti",
+          price: "13,00€"
+        },
+        {
+          name: "KANAJAUHELIHAPIHVI",
+          description: "Uunissa paistettu kanajauhelihapihvi 200g, riisillä, lohkoperunoilla tai leivälla, currykastike, salaatti",
+          price: "12,00€"
+        },
+        {
+          name: "CHILI CON CARNE",
+          description: "",
+          price: ""
+        }
+      ]
+    },
+    dipit: {
+      emoji: "🥑",
+      name: "DIPIT",
+      items: [
+        {
+          name: "CHILI",
+          description: "",
+          price: "1€"
+        },
+        {
+          name: "VALKOSIPULI",
+          description: "",
+          price: "1€"
+        },
+        {
+          name: "MEXICANA",
+          description: "",
+          price: "1€"
+        },
+        {
+          name: "BBQ",
+          description: "",
+          price: "1€"
+        },
+        {
+          name: "PAPRIKA",
+          description: "",
+          price: "1€"
+        },
+        {
+          name: "GUACAMOLE",
+          description: "",
+          price: "1€"
+        },
+        {
+          name: "SOUR CREAM",
+          description: "",
+          price: "1€"
+        }
+      ]
+    },
+    pienet: {
+      emoji: "🍽️",
+      name: "PIENET",
+      items: [
+        {
+          name: "MEKSIKON MAISSI",
+          description: "",
+          price: "5€"
+        },
+        {
+          name: "MEKSIKON HERNE",
+          description: "",
+          price: "5€"
+        }
+      ]
+    },
+    juomat: {
+      emoji: "🥤",
+      name: "JUOMAT",
+      items: [
+        {
+          name: "0,5 PULLO",
+          description: "",
+          price: "3,50€"
+        }
+      ]
+    },
+    ateria: {
+      emoji: "🍽️",
+      name: "ATERIA / LISUKEET",
+      items: [
+        {
+          name: "MAISSILASTUT JA DIPPI",
+          description: "",
+          price: "2,50€ (JUOMA 0,5 +1€)"
+        },
+        {
+          name: "JALAPENO POPPERS",
+          description: "",
+          price: "3,50€ (JUOMA 0,5 +1€)"
+        }
+      ]
+    }
+  };
 
   // Food carousel images
   const foodImages = [
@@ -111,6 +351,10 @@ export const Desktop = (): JSX.Element => {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const toggleCategory = (categoryKey: string) => {
+    setExpandedCategory(expandedCategory === categoryKey ? null : categoryKey);
   };
 
   return (
@@ -351,23 +595,60 @@ export const Desktop = (): JSX.Element => {
             Menu
           </h2>
 
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <Card className="bg-gradient-to-br from-orange-100 to-yellow-100 rounded-3xl border-none shadow-xl">
               <CardContent className="p-8 md:p-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {menuCategories.map((category, index) => (
-                    <div key={index} className="bg-white/80 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                      <div className="flex items-center gap-4">
-                        <span className="text-4xl">{category.emoji}</span>
-                        <h3 className="text-xl md:text-2xl font-bold text-gray-800">{category.name}</h3>
-                      </div>
+                <div className="space-y-6">
+                  {Object.entries(menuData).map(([categoryKey, category]) => (
+                    <div key={categoryKey} className="bg-white/90 rounded-2xl shadow-lg overflow-hidden">
+                      <button
+                        onClick={() => toggleCategory(categoryKey)}
+                        className="w-full p-6 flex items-center justify-between hover:bg-orange-50 transition-colors duration-200"
+                      >
+                        <div className="flex items-center gap-4">
+                          <span className="text-4xl">{category.emoji}</span>
+                          <h3 className="text-xl md:text-2xl font-bold text-gray-800">{category.name}</h3>
+                        </div>
+                        <svg 
+                          className={`w-6 h-6 text-orange-600 transition-transform duration-200 ${
+                            expandedCategory === categoryKey ? 'rotate-180' : ''
+                          }`} 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      
+                      {expandedCategory === categoryKey && (
+                        <div className="px-6 pb-6 border-t border-orange-100">
+                          <div className="space-y-4 mt-4">
+                            {category.items.map((item, index) => (
+                              <div key={index} className="flex justify-between items-start gap-4 p-4 bg-orange-50/50 rounded-lg">
+                                <div className="flex-1">
+                                  <h4 className="font-bold text-gray-800 mb-1">{item.name}</h4>
+                                  {item.description && (
+                                    <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+                                  )}
+                                </div>
+                                {item.price && (
+                                  <div className="text-lg font-bold text-orange-600 whitespace-nowrap">
+                                    {item.price}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                            {category.note && (
+                              <div className="mt-4 p-3 bg-orange-100 rounded-lg">
+                                <p className="text-sm font-medium text-orange-800 text-center">{category.note}</p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ))}
-                </div>
-                <div className="text-center mt-8">
-                  <p className="text-lg text-gray-600 italic">
-                    Tuotteet ja hinnat lisätään pian!
-                  </p>
                 </div>
               </CardContent>
             </Card>
