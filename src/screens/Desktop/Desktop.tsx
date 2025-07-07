@@ -603,15 +603,15 @@ export const Desktop = (): JSX.Element => {
                     <div key={categoryKey} className="bg-white/90 rounded-2xl shadow-lg overflow-hidden">
                       <button
                         onClick={() => toggleCategory(categoryKey)}
-                        className="w-full p-6 flex items-center justify-between hover:bg-orange-50 transition-colors duration-200"
+                        className="w-full p-6 flex items-center justify-between hover:bg-orange-50 transition-all duration-300 group"
                       >
                         <div className="flex items-center gap-4">
-                          <span className="text-4xl">{category.emoji}</span>
-                          <h3 className="text-xl md:text-2xl font-bold text-gray-800">{category.name}</h3>
+                          <span className="text-4xl group-hover:scale-110 transition-transform duration-300">{category.emoji}</span>
+                          <h3 className="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-orange-600 transition-colors duration-300">{category.name}</h3>
                         </div>
                         <svg 
-                          className={`w-6 h-6 text-orange-600 transition-transform duration-200 ${
-                            expandedCategory === categoryKey ? 'rotate-180' : ''
+                          className={`w-6 h-6 text-orange-600 transition-all duration-500 ease-in-out ${
+                            expandedCategory === categoryKey ? 'rotate-180 scale-110' : 'group-hover:scale-110'
                           }`} 
                           fill="none" 
                           stroke="currentColor" 
@@ -621,11 +621,27 @@ export const Desktop = (): JSX.Element => {
                         </svg>
                       </button>
                       
-                      {expandedCategory === categoryKey && (
+                      <div 
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                          expandedCategory === categoryKey 
+                            ? 'max-h-[2000px] opacity-100' 
+                            : 'max-h-0 opacity-0'
+                        }`}
+                      >
                         <div className="px-6 pb-6 border-t border-orange-100">
                           <div className="space-y-4 mt-4">
                             {category.items.map((item, index) => (
-                              <div key={index} className="flex justify-between items-start gap-4 p-4 bg-orange-50/50 rounded-lg">
+                              <div 
+                                key={index} 
+                                className={`flex justify-between items-start gap-4 p-4 bg-orange-50/50 rounded-lg transform transition-all duration-300 ${
+                                  expandedCategory === categoryKey 
+                                    ? 'translate-y-0 opacity-100' 
+                                    : 'translate-y-4 opacity-0'
+                                }`}
+                                style={{ 
+                                  transitionDelay: expandedCategory === categoryKey ? `${index * 50}ms` : '0ms' 
+                                }}
+                              >
                                 <div className="flex-1">
                                   <h4 className="font-bold text-gray-800 mb-1">{item.name}</h4>
                                   {item.description && (
@@ -640,13 +656,22 @@ export const Desktop = (): JSX.Element => {
                               </div>
                             ))}
                             {category.note && (
-                              <div className="mt-4 p-3 bg-orange-100 rounded-lg">
+                              <div 
+                                className={`mt-4 p-3 bg-orange-100 rounded-lg transform transition-all duration-300 ${
+                                  expandedCategory === categoryKey 
+                                    ? 'translate-y-0 opacity-100' 
+                                    : 'translate-y-4 opacity-0'
+                                }`}
+                                style={{ 
+                                  transitionDelay: expandedCategory === categoryKey ? `${category.items.length * 50}ms` : '0ms' 
+                                }}
+                              >
                                 <p className="text-sm font-medium text-orange-800 text-center">{category.note}</p>
                               </div>
                             )}
                           </div>
                         </div>
-                      )}
+                      </div>
                     </div>
                   ))}
                 </div>
