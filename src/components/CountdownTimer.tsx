@@ -11,6 +11,7 @@ export const CountdownTimer: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isOpening, setIsOpening] = useState(false);
   const [currentFeatureIndex, setCurrentFeatureIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   // Features to cycle through on mobile
@@ -36,8 +37,15 @@ export const CountdownTimer: React.FC = () => {
   useEffect(() => {
     if (isMobile) {
       const featureTimer = setInterval(() => {
-        setCurrentFeatureIndex((prev) => (prev + 1) % features.length);
-      }, 2000); // Change every 2 seconds
+        setIsTransitioning(true);
+        
+        // After fade out animation, change the feature
+        setTimeout(() => {
+          setCurrentFeatureIndex((prev) => (prev + 1) % features.length);
+          setIsTransitioning(false);
+        }, 300); // Half of transition duration
+        
+      }, 3000); // Change every 3 seconds (increased for better readability)
 
       return () => clearInterval(featureTimer);
     }
@@ -159,28 +167,57 @@ export const CountdownTimer: React.FC = () => {
           <div className="bg-gradient-to-br from-orange-100 to-yellow-100 rounded-3xl p-8 shadow-xl border-none">
             {isMobile ? (
               // Mobile: Single feature that auto-cycles
-              <div className="text-center">
+              <div className="text-center relative overflow-hidden">
+                {/* Background slide animation */}
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-200 via-yellow-200 to-orange-200 opacity-30 transform transition-transform duration-700 ease-in-out"
+                     style={{ 
+                       transform: `translateX(${isTransitioning ? '100%' : '0%'})` 
+                     }}
+                />
+                
                 <div className="group">
-                  <div className="text-6xl mb-4 transform transition-all duration-500 ease-in-out animate-pulse">
+                  <div className={`text-6xl mb-4 transform transition-all duration-600 ease-in-out ${
+                    isTransitioning 
+                      ? 'scale-75 opacity-0 rotate-12 translate-y-4' 
+                      : 'scale-100 opacity-100 rotate-0 translate-y-0 animate-pulse'
+                  }`}>
                     {features[currentFeatureIndex].emoji}
                   </div>
-                  <p className="font-bold text-xl text-[#4a3c2b] drop-shadow-sm font-sans transition-all duration-500 ease-in-out">
+                  <p className={`font-bold text-xl text-[#4a3c2b] drop-shadow-sm font-sans transition-all duration-600 ease-in-out ${
+                    isTransitioning 
+                      ? 'opacity-0 translate-x-8 blur-sm' 
+                      : 'opacity-100 translate-x-0 blur-0'
+                  }`}>
                     {features[currentFeatureIndex].text}
                   </p>
                 </div>
                 
                 {/* Dots indicator */}
-                <div className="flex justify-center gap-2 mt-4">
+                <div className="flex justify-center gap-2 mt-6">
                   {features.map((_, index) => (
                     <div
                       key={index}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      className={`w-3 h-3 rounded-full transition-all duration-500 ease-in-out ${
                         index === currentFeatureIndex 
-                          ? 'bg-[#4a3c2b] scale-125' 
-                          : 'bg-[#4a3c2b]/30'
+                          ? 'bg-[#4a3c2b] scale-125 shadow-lg' 
+                          : 'bg-[#4a3c2b]/30 scale-100'
                       }`}
+                      style={{
+                        animationDelay: `${index * 100}ms`
+                      }}
                     />
                   ))}
+                </div>
+                
+                {/* Progress bar */}
+                <div className="mt-4 w-full bg-[#4a3c2b]/20 rounded-full h-1 overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-[#4a3c2b] to-orange-500 rounded-full transition-all duration-75 ease-linear"
+                    style={{
+                      width: isTransitioning ? '100%' : '0%',
+                      animation: isTransitioning ? 'none' : 'progress 3000ms linear infinite'
+                    }}
+                  />
                 </div>
               </div>
             ) : (
