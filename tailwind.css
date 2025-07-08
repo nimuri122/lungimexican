@@ -1,7 +1,8 @@
+@tailwind base;
 @tailwind components;
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
-
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
 
 @layer utilities {
   @keyframes float {
@@ -42,10 +43,6 @@
     to { box-shadow: 0 0 20px 10px rgba(255, 255, 255, 1); }
   }
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   @font-face {
