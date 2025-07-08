@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "../../components/ui/card";
 import { CountdownTimer } from "../../components/CountdownTimer";
+import { FloatingEmojis } from "../../components/FloatingEmojis";
 
 export const Desktop = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true);
@@ -377,6 +378,9 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <div className="bg-[#f6d590] min-h-screen w-full">
+      {/* Floating Emojis */}
+      <FloatingEmojis />
+      
       {isLoading && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
           <div className="text-center">
@@ -1044,8 +1048,6 @@ export const Desktop = (): JSX.Element => {
           />
         ))}
       </div>
-
-
     </div>
   );
 };
