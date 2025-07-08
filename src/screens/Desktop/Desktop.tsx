@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "../../components/ui/card";
+import { CountdownTimer } from "../../components/CountdownTimer";
 
 export const Desktop = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true);
@@ -499,6 +500,9 @@ export const Desktop = (): JSX.Element => {
       <div className="container mx-auto px-4 space-y-16 pb-16">
         {/* Welcome section */}
         <section id="etusivu" className="text-center py-8">
+          {/* Countdown Timer */}
+          <CountdownTimer />
+          
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] mb-6 font-keynord">
             Tervetuloa LUNGIin!
           </h1>
