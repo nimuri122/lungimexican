@@ -65,44 +65,85 @@ export const CountdownTimer: React.FC = () => {
   return (
     <div className="text-center py-16 relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 text-6xl animate-bounce">🌮</div>
-        <div className="absolute top-20 right-20 text-5xl animate-bounce" style={{ animationDelay: '0.5s' }}>🌯</div>
-        <div className="absolute bottom-20 left-20 text-4xl animate-bounce" style={{ animationDelay: '1s' }}>🌶️</div>
-        <div className="absolute bottom-10 right-10 text-5xl animate-bounce" style={{ animationDelay: '1.5s' }}>🥑</div>
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 left-10 text-4xl animate-bounce">🌮</div>
+        <div className="absolute top-20 right-20 text-3xl animate-bounce" style={{ animationDelay: '0.5s' }}>🌯</div>
+        <div className="absolute bottom-20 left-20 text-3xl animate-bounce" style={{ animationDelay: '1s' }}>🌶️</div>
+        <div className="absolute bottom-10 right-10 text-4xl animate-bounce" style={{ animationDelay: '1.5s' }}>🥑</div>
       </div>
 
       <div className="relative z-10">
-        <h2 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
+        <h2 className="text-4xl md:text-6xl font-bold text-[#f5f5dc] mb-4 drop-shadow-lg">
           Avaamme Pian!
         </h2>
-        <p className="text-xl md:text-2xl text-gray-600 mb-2">
+        <p className="text-xl md:text-2xl text-[#f5f5dc] mb-2 drop-shadow-md">
           11. Heinäkuuta 2025, klo 10:30
         </p>
-        <p className="text-lg text-gray-500 mb-12">
+        <p className="text-lg text-[#f5f5dc] mb-12 drop-shadow-md opacity-90">
           Helsinki, Suomi 🇫🇮
         </p>
 
         {/* Countdown Display */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto mb-12">
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 max-w-6xl mx-auto mb-12">
           {timeUnits.map((unit, index) => (
             <div
               key={unit.label}
-              className="relative group"
+              className="relative group text-center"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              {/* Glowing background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${unit.color} rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300`}></div>
+              {/* Number */}
+              <div className="text-6xl md:text-8xl lg:text-9xl font-bold text-[#f5f5dc] mb-2 font-mono tracking-tight drop-shadow-2xl transform hover:scale-110 transition-all duration-300">
+                {unit.value.toString().padStart(2, '0')}
+              </div>
+              {/* Label */}
+              <div className="text-lg md:text-xl font-medium uppercase tracking-wider text-[#f5f5dc] opacity-80 drop-shadow-lg">
+                {unit.label}
+              </div>
               
-              {/* Main card */}
-              <div className={`relative bg-gradient-to-br ${unit.color} rounded-3xl p-6 md:p-8 shadow-2xl transform hover:scale-105 transition-all duration-300`}>
-                <div className="text-white">
-                  <div className="text-4xl md:text-6xl lg:text-7xl font-bold mb-2 font-mono tracking-tight">
-                    {unit.value.toString().padStart(2, '0')}
-                  </div>
-                  <div className="text-sm md:text-lg font-medium uppercase tracking-wider opacity-90">
-                    {unit.label}
-                  </div>
+              {/* Subtle glow effect on hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500">
+                <div className="w-full h-full bg-gradient-to-r from-orange-300 to-yellow-300 blur-2xl rounded-full"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Separator line */}
+        <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-[#f5f5dc] to-transparent mx-auto mb-8 opacity-60"></div>
+
+        {/* Additional info */}
+        <div className="max-w-2xl mx-auto mb-8">
+          <h3 className="text-2xl md:text-3xl font-bold text-[#f5f5dc] mb-6 drop-shadow-lg">
+            Mitä odottaa? 🎉
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div className="group">
+              <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌮</div>
+              <p className="font-medium text-[#f5f5dc] drop-shadow-md">Tuoreet Tacot</p>
+            </div>
+            <div className="group">
+              <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌯</div>
+              <p className="font-medium text-[#f5f5dc] drop-shadow-md">Herkullisia Burritoja</p>
+            </div>
+            <div className="group">
+              <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🎊</div>
+              <p className="font-medium text-[#f5f5dc] drop-shadow-md">Avajaistarjouksia</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Pulsing notification */}
+        <div className="mt-8">
+          <div className="inline-flex items-center gap-3 text-[#f5f5dc] font-medium animate-pulse drop-shadow-lg">
+            <span className="w-3 h-3 bg-[#f5f5dc] rounded-full animate-ping opacity-75"></span>
+            <span className="text-lg">Seuraa meitä sosiaalisessa mediassa päivityksistä!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
                 </div>
                 
                 {/* Shine effect */}
