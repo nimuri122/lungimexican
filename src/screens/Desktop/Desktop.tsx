@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "../../components/ui/card";
 import { CountdownTimer } from "../../components/CountdownTimer";
-import { FloatingEmojis } from "../../components/FloatingEmojis";
 
 export const Desktop = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true);
@@ -378,8 +377,50 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <div className="bg-[#f6d590] min-h-screen w-full">
-      {/* Floating Emojis */}
-      <FloatingEmojis />
+      {/* Jumping Emojis around the sides */}
+      <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden">
+        {/* Left side emojis */}
+        <div className="absolute left-4 top-20 text-4xl animate-bounce" style={{ animationDelay: '0s' }}>🌮</div>
+        <div className="absolute left-8 top-40 text-3xl animate-bounce" style={{ animationDelay: '0.5s' }}>🌯</div>
+        <div className="absolute left-2 top-60 text-3xl animate-bounce" style={{ animationDelay: '1s' }}>🌶️</div>
+        <div className="absolute left-6 top-80 text-4xl animate-bounce" style={{ animationDelay: '1.5s' }}>🥑</div>
+        <div className="absolute left-4 bottom-80 text-3xl animate-bounce" style={{ animationDelay: '2s' }}>🌽</div>
+        <div className="absolute left-8 bottom-60 text-4xl animate-bounce" style={{ animationDelay: '2.5s' }}>🫔</div>
+        <div className="absolute left-2 bottom-40 text-3xl animate-bounce" style={{ animationDelay: '3s' }}>🧄</div>
+        <div className="absolute left-6 bottom-20 text-4xl animate-bounce" style={{ animationDelay: '3.5s' }}>🍅</div>
+
+        {/* Right side emojis */}
+        <div className="absolute right-4 top-20 text-4xl animate-bounce" style={{ animationDelay: '0.2s' }}>🌮</div>
+        <div className="absolute right-8 top-40 text-3xl animate-bounce" style={{ animationDelay: '0.7s' }}>🌯</div>
+        <div className="absolute right-2 top-60 text-3xl animate-bounce" style={{ animationDelay: '1.2s' }}>🌶️</div>
+        <div className="absolute right-6 top-80 text-4xl animate-bounce" style={{ animationDelay: '1.7s' }}>🥑</div>
+        <div className="absolute right-4 bottom-80 text-3xl animate-bounce" style={{ animationDelay: '2.2s' }}>🌽</div>
+        <div className="absolute right-8 bottom-60 text-4xl animate-bounce" style={{ animationDelay: '2.7s' }}>🫔</div>
+        <div className="absolute right-2 bottom-40 text-3xl animate-bounce" style={{ animationDelay: '3.2s' }}>🧄</div>
+        <div className="absolute right-6 bottom-20 text-4xl animate-bounce" style={{ animationDelay: '3.7s' }}>🍅</div>
+
+        {/* Top corners */}
+        <div className="absolute left-20 top-4 text-3xl animate-bounce" style={{ animationDelay: '0.3s' }}>🎉</div>
+        <div className="absolute right-20 top-4 text-3xl animate-bounce" style={{ animationDelay: '0.8s' }}>🎊</div>
+        <div className="absolute left-40 top-8 text-4xl animate-bounce" style={{ animationDelay: '1.3s' }}>💃</div>
+        <div className="absolute right-40 top-8 text-4xl animate-bounce" style={{ animationDelay: '1.8s' }}>🕺</div>
+
+        {/* Bottom corners */}
+        <div className="absolute left-20 bottom-4 text-3xl animate-bounce" style={{ animationDelay: '2.3s' }}>🎵</div>
+        <div className="absolute right-20 bottom-4 text-3xl animate-bounce" style={{ animationDelay: '2.8s' }}>🎶</div>
+        <div className="absolute left-40 bottom-8 text-4xl animate-bounce" style={{ animationDelay: '3.3s' }}>🌵</div>
+        <div className="absolute right-40 bottom-8 text-4xl animate-bounce" style={{ animationDelay: '3.8s' }}>🥭</div>
+
+        {/* Additional scattered emojis for larger screens */}
+        <div className="hidden lg:block absolute left-12 top-1/3 text-3xl animate-bounce" style={{ animationDelay: '0.4s' }}>🍋</div>
+        <div className="hidden lg:block absolute right-12 top-1/3 text-3xl animate-bounce" style={{ animationDelay: '0.9s' }}>🥒</div>
+        <div className="hidden lg:block absolute left-12 bottom-1/3 text-4xl animate-bounce" style={{ animationDelay: '1.4s' }}>🫘</div>
+        <div className="hidden lg:block absolute right-12 bottom-1/3 text-4xl animate-bounce" style={{ animationDelay: '1.9s' }}>🧅</div>
+        
+        {/* Mid-height emojis */}
+        <div className="hidden md:block absolute left-4 top-1/2 text-3xl animate-bounce" style={{ animationDelay: '2.4s' }}>🌮</div>
+        <div className="hidden md:block absolute right-4 top-1/2 text-3xl animate-bounce" style={{ animationDelay: '2.9s' }}>🌯</div>
+      </div>
       
       {isLoading && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
