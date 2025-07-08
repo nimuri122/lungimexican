@@ -57,6 +57,10 @@ module.exports = {
           '"Segoe UI Symbol"',
           '"Noto Color Emoji"',
         ],
+        hand: [
+          "Just Another Hand",
+          "cursive",
+        ],
       },
       keyframes: {
         "accordion-down": {
