@@ -93,17 +93,19 @@ export const CountdownTimer: React.FC = () => {
             >
               {/* Number */}
               <div className="relative text-6xl md:text-8xl lg:text-9xl font-bold text-[#4a3c2b] mb-2 font-sans tracking-tight drop-shadow-2xl transform hover:scale-110 transition-all duration-300 overflow-hidden">
-                {unit.value.toString().padStart(2, '0')}
-                
-                {/* Moving lighting gradient */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 transform translate-x-[-200%] animate-shine"></div>
+                <span className="relative inline-block">
+                  <span className="relative z-10">{unit.value.toString().padStart(2, '0')}</span>
+                  {/* Moving lighting gradient - only visible within text */}
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 transform translate-x-[-200%] animate-shine bg-clip-text text-transparent mix-blend-overlay"></span>
+                </span>
               </div>
               {/* Label */}
-              <div className="relative text-lg md:text-xl font-medium uppercase tracking-wider text-[#4a3c2b] opacity-80 drop-shadow-lg overflow-hidden font-sans">
-                {unit.label}
-                
-                {/* Moving lighting gradient for labels */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform translate-x-[-200%] animate-shine-slow"></div>
+              <div className="relative text-lg md:text-xl font-medium uppercase tracking-wider text-[#4a3c2b] opacity-80 drop-shadow-lg font-sans">
+                <span className="relative inline-block">
+                  <span className="relative z-10">{unit.label}</span>
+                  {/* Moving lighting gradient for labels - only visible within text */}
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 transform translate-x-[-200%] animate-shine-slow bg-clip-text text-transparent mix-blend-overlay"></span>
+                </span>
               </div>
               
               {/* Subtle glow effect on hover */}
