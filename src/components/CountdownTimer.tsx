@@ -92,12 +92,18 @@ export const CountdownTimer: React.FC = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Number */}
-              <div className="text-6xl md:text-8xl lg:text-9xl font-bold text-[#4a3c2b] mb-2 font-mono tracking-tight drop-shadow-2xl transform hover:scale-110 transition-all duration-300">
+              <div className="relative text-6xl md:text-8xl lg:text-9xl font-bold text-[#4a3c2b] mb-2 font-mono tracking-tight drop-shadow-2xl transform hover:scale-110 transition-all duration-300 overflow-hidden">
                 {unit.value.toString().padStart(2, '0')}
+                
+                {/* Moving lighting gradient */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 transform translate-x-[-200%] animate-shine"></div>
               </div>
               {/* Label */}
-              <div className="text-lg md:text-xl font-medium uppercase tracking-wider text-[#4a3c2b] opacity-80 drop-shadow-lg">
+              <div className="relative text-lg md:text-xl font-medium uppercase tracking-wider text-[#4a3c2b] opacity-80 drop-shadow-lg overflow-hidden">
                 {unit.label}
+                
+                {/* Moving lighting gradient for labels */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform translate-x-[-200%] animate-shine-slow"></div>
               </div>
               
               {/* Subtle glow effect on hover */}
