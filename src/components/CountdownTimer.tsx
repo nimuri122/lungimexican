@@ -73,13 +73,13 @@ export const CountdownTimer: React.FC = () => {
       </div>
 
       <div className="relative z-10">
-        <h2 className="text-4xl md:text-6xl font-bold text-[#f5f5dc] mb-4 drop-shadow-lg">
+        <h2 className="text-4xl md:text-6xl font-bold text-[#4a3c2b] mb-4 drop-shadow-lg">
           Avaamme Pian!
         </h2>
-        <p className="text-xl md:text-2xl text-[#f5f5dc] mb-2 drop-shadow-md">
+        <p className="text-xl md:text-2xl text-[#4a3c2b] mb-2 drop-shadow-md">
           11. Heinäkuuta 2025, klo 10:30
         </p>
-        <p className="text-lg text-[#f5f5dc] mb-12 drop-shadow-md opacity-90">
+        <p className="text-lg text-[#4a3c2b] mb-12 drop-shadow-md opacity-90">
           Helsinki, Suomi 🇫🇮
         </p>
 
@@ -92,11 +92,11 @@ export const CountdownTimer: React.FC = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Number */}
-              <div className="text-6xl md:text-8xl lg:text-9xl font-bold text-[#f5f5dc] mb-2 font-mono tracking-tight drop-shadow-2xl transform hover:scale-110 transition-all duration-300">
+              <div className="text-6xl md:text-8xl lg:text-9xl font-bold text-[#4a3c2b] mb-2 font-mono tracking-tight drop-shadow-2xl transform hover:scale-110 transition-all duration-300">
                 {unit.value.toString().padStart(2, '0')}
               </div>
               {/* Label */}
-              <div className="text-lg md:text-xl font-medium uppercase tracking-wider text-[#f5f5dc] opacity-80 drop-shadow-lg">
+              <div className="text-lg md:text-xl font-medium uppercase tracking-wider text-[#4a3c2b] opacity-80 drop-shadow-lg">
                 {unit.label}
               </div>
               
@@ -109,33 +109,35 @@ export const CountdownTimer: React.FC = () => {
         </div>
 
         {/* Separator line */}
-        <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-[#f5f5dc] to-transparent mx-auto mb-8 opacity-60"></div>
+        <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-[#4a3c2b] to-transparent mx-auto mb-8 opacity-60"></div>
 
         {/* Additional info */}
         <div className="max-w-2xl mx-auto mb-8">
-          <h3 className="text-2xl md:text-3xl font-bold text-[#f5f5dc] mb-6 drop-shadow-lg">
+          <h3 className="text-2xl md:text-3xl font-bold text-[#4a3c2b] mb-6 drop-shadow-lg">
             Mitä odottaa? 🎉
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div className="group">
-              <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌮</div>
-              <p className="font-medium text-[#f5f5dc] drop-shadow-md">Tuoreet Tacot</p>
-            </div>
-            <div className="group">
-              <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌯</div>
-              <p className="font-medium text-[#f5f5dc] drop-shadow-md">Herkullisia Burritoja</p>
-            </div>
-            <div className="group">
-              <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🎊</div>
-              <p className="font-medium text-[#f5f5dc] drop-shadow-md">Avajaistarjouksia</p>
+          <div className="bg-gradient-to-br from-orange-100 to-yellow-100 rounded-3xl p-8 shadow-xl border-none">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+              <div className="group">
+                <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌮</div>
+                <p className="font-medium text-[#4a3c2b] drop-shadow-sm">Tuoreet Tacot</p>
+              </div>
+              <div className="group">
+                <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌯</div>
+                <p className="font-medium text-[#4a3c2b] drop-shadow-sm">Herkullisia Burritoja</p>
+              </div>
+              <div className="group">
+                <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🎊</div>
+                <p className="font-medium text-[#4a3c2b] drop-shadow-sm">Avajaistarjouksia</p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Pulsing notification */}
         <div className="mt-8">
-          <div className="inline-flex items-center gap-3 text-[#f5f5dc] font-medium animate-pulse drop-shadow-lg">
-            <span className="w-3 h-3 bg-[#f5f5dc] rounded-full animate-ping opacity-75"></span>
+          <div className="inline-flex items-center gap-3 text-[#4a3c2b] font-medium animate-pulse drop-shadow-lg">
+            <span className="w-3 h-3 bg-[#4a3c2b] rounded-full animate-ping opacity-75"></span>
             <span className="text-lg">Seuraa meitä sosiaalisessa mediassa päivityksistä!</span>
           </div>
         </div>
