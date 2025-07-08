@@ -10,6 +10,38 @@ interface TimeLeft {
 export const CountdownTimer: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isOpening, setIsOpening] = useState(false);
+  const [currentFeatureIndex, setCurrentFeatureIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Features to cycle through on mobile
+  const features = [
+    { emoji: '🌮', text: 'Tuoreet Tacot' },
+    { emoji: '🌯', text: 'Herkullisia Burritoja' },
+    { emoji: '🎊', text: 'Avajaistarjouksia' },
+  ];
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Auto-cycle features on mobile
+  useEffect(() => {
+    if (isMobile) {
+      const featureTimer = setInterval(() => {
+        setCurrentFeatureIndex((prev) => (prev + 1) % features.length);
+      }, 2000); // Change every 2 seconds
+
+      return () => clearInterval(featureTimer);
+    }
+  }, [isMobile, features.length]);
 
   useEffect(() => {
     // Target date: July 11, 2025, 10:30 Helsinki time (UTC+2 in summer)
@@ -125,20 +157,49 @@ export const CountdownTimer: React.FC = () => {
             Mitä odottaa? 🎉
           </h3>
           <div className="bg-gradient-to-br from-orange-100 to-yellow-100 rounded-3xl p-8 shadow-xl border-none">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-              <div className="group">
-                <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌮</div>
-                <p className="font-medium text-[#4a3c2b] drop-shadow-sm font-sans">Tuoreet Tacot</p>
+            {isMobile ? (
+              // Mobile: Single feature that auto-cycles
+              <div className="text-center">
+                <div className="group">
+                  <div className="text-6xl mb-4 transform transition-all duration-500 ease-in-out animate-pulse">
+                    {features[currentFeatureIndex].emoji}
+                  </div>
+                  <p className="font-bold text-xl text-[#4a3c2b] drop-shadow-sm font-sans transition-all duration-500 ease-in-out">
+                    {features[currentFeatureIndex].text}
+                  </p>
+                </div>
+                
+                {/* Dots indicator */}
+                <div className="flex justify-center gap-2 mt-4">
+                  {features.map((_, index) => (
+                    <div
+                      key={index}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === currentFeatureIndex 
+                          ? 'bg-[#4a3c2b] scale-125' 
+                          : 'bg-[#4a3c2b]/30'
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="group">
-                <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌯</div>
-                <p className="font-medium text-[#4a3c2b] drop-shadow-sm font-sans">Herkullisia Burritoja</p>
+            ) : (
+              // Desktop: All features visible
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div className="group">
+                  <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌮</div>
+                  <p className="font-medium text-[#4a3c2b] drop-shadow-sm font-sans">Tuoreet Tacot</p>
+                </div>
+                <div className="group">
+                  <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌯</div>
+                  <p className="font-medium text-[#4a3c2b] drop-shadow-sm font-sans">Herkullisia Burritoja</p>
+                </div>
+                <div className="group">
+                  <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🎊</div>
+                  <p className="font-medium text-[#4a3c2b] drop-shadow-sm font-sans">Avajaistarjouksia</p>
+                </div>
               </div>
-              <div className="group">
-                <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🎊</div>
-                <p className="font-medium text-[#4a3c2b] drop-shadow-sm font-sans">Avajaistarjouksia</p>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
