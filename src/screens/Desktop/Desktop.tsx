@@ -556,6 +556,11 @@ export const Desktop = (): JSX.Element => {
                 ))}
               </div>
             </div>
+            
+            {/* Stock photo disclaimer */}
+            <p className="text-xs text-gray-500 text-center mt-2 opacity-70">
+              *Stock images for illustration purposes
+            </p>
 
             {/* Navigation Arrows */}
             <button
