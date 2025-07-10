@@ -1081,7 +1081,7 @@ export const Desktop = (): JSX.Element => {
                 {/* Contact Button */}
                 <button
                   onClick={() => {
-                    window.location.href = "mailto:contact@titledcreations.tech?subject=Website%20Inquiry%20-%20Like%20LUNGI%20Site&body=Hi!%20I'm%20interested%20in%20getting%20a%20website%20similar%20to%20the%20LUNGI%20restaurant%20site.%20Please%20contact%20me%20with%20more%20information.";
+                    window.location.href="mailto:contact.titledcreations.tech?subject=Im%20intrested%20in%20a%20website">Contact</a>
                   }}
                   className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full font-medium hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-lg text-sm"
                 >
