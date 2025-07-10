@@ -16,6 +16,7 @@ export const Desktop = (): JSX.Element => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [showContactPopup, setShowContactPopup] = useState(false);
+  const [copyFeedback, setCopyFeedback] = useState(false);
 
   // Navigation menu items
   const navItems = [
@@ -182,12 +183,12 @@ export const Desktop = (): JSX.Element => {
       items: [
         {
           name: "JAUHELIHAPIHVI",
-          description: "Uunissa paistettu kanajauhelihapihvi 200g, riisillä, lohkoperunoilla tai leivälla, talon kastike, salaatti",
+          description: "Uunissa paistettu kanajauhelihapihvi 200g, riisillä, lohkoperunoilla tai leivällä, talon kastike, salaatti",
           price: "13,00€"
         },
         {
           name: "KANAJAUHELIHAPIHVI",
-          description: "Uunissa paistettu kanajauhelihapihvi 200g, riisillä, lohkoperunoilla tai leivälla, currykastike, salaatti",
+          description: "Uunissa paistettu kanajauhelihapihvi 200g, riisillä, lohkoperunoilla tai leivällä, currykastike, salaatti",
           price: "12,00€"
         },
         {
@@ -1081,12 +1082,25 @@ export const Desktop = (): JSX.Element => {
                 {/* Contact Button */}
                 <button
                   onClick={() => {
-                    window.location.href="mailto:contact.titledcreations.tech?subject=Im%20intrested%20in%20a%20website">Contact</a>
+                    navigator.clipboard.writeText("contact@titledcreations.tech").then(() => {
+                      setCopyFeedback(true);
+                      setTimeout(() => setCopyFeedback(false), 2000);
+                    }).catch(() => {
+                      // Fallback for older browsers
+                      const textArea = document.createElement("textarea");
+                      textArea.value = "contact@titledcreations.tech";
+                      document.body.appendChild(textArea);
+                      textArea.select();
+                      document.execCommand("copy");
+                      document.body.removeChild(textArea);
+                      setCopyFeedback(true);
+                      setTimeout(() => setCopyFeedback(false), 2000);
+                    });
                   }}
                   className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full font-medium hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-lg text-sm"
                 >
-                  <span>📧</span>
-                  Send Email
+                  <span>{copyFeedback ? "✓" : "📋"}</span>
+                  {copyFeedback ? "Copied!" : "Copy Email"}
                 </button>
                 
                 <p className="text-xs text-gray-500 mt-2">contact@titledcreations.tech</p>
