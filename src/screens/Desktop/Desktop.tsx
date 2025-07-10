@@ -389,7 +389,22 @@ export const Desktop = (): JSX.Element => {
         <div className="absolute left-2 bottom-40 text-3xl animate-bounce" style={{ animationDelay: '3s' }}>🧄</div>
         <div className="absolute left-6 bottom-20 text-4xl animate-bounce" style={{ animationDelay: '3.5s' }}>🍅</div>
 
-        {/* Right side emojis */}
+      </div>
+      
+      {isLoading && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
+          <div className="text-center">
+            <img
+              src="/Group 7 (1).png"
+              alt="Lungi Restaurant Logo"
+              className="h-32 w-auto mx-auto mb-8 animate-pulse"
+            />
+            <div className="w-16 h-16 border-4 border-t-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          </div>
+        </div>
+      )}
+      
+      {/* Header section */}
       <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-orange-200 to-yellow-200 shadow-md">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
