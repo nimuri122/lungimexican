@@ -15,6 +15,7 @@ export const Desktop = (): JSX.Element => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [showContactPopup, setShowContactPopup] = useState(false);
 
   // Navigation menu items
   const navItems = [
@@ -373,6 +374,14 @@ export const Desktop = (): JSX.Element => {
 
   const toggleCategory = (categoryKey: string) => {
     setExpandedCategory(expandedCategory === categoryKey ? null : categoryKey);
+  };
+
+  const openContactPopup = () => {
+    setShowContactPopup(true);
+  };
+
+  const closeContactPopup = () => {
+    setShowContactPopup(false);
   };
 
   return (
@@ -1023,10 +1032,70 @@ export const Desktop = (): JSX.Element => {
             {/* Copyright */}
             <div className="text-center text-white/60 text-sm border-t border-white/20 pt-4 w-full">
               <p>&copy; 2025 LUNGI Mexican Food. Kaikki oikeudet pidätetään.</p>
+              
+              {/* Want a site like this button - moved to bottom */}
+              <button
+                onClick={openContactPopup}
+                className="mt-3 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-white/30 hover:scale-105 transition-all duration-300 shadow-lg border border-white/30"
+              >
+                Want a site like this? 🚀
+              </button>
             </div>
           </div>
         </div>
       </footer>
+
+      {/* Contact Popup - Smaller and more compact */}
+      {showContactPopup && (
+        <div 
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+          onClick={closeContactPopup}
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-2xl max-w-sm w-full mx-4 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-4 text-white text-center relative">
+              <h3 className="text-lg font-bold mb-1">Get Your Own Website! 🚀</h3>
+              <p className="text-orange-100 text-sm">Professional web design</p>
+              
+              {/* Close Button */}
+              <button
+                onClick={closeContactPopup}
+                className="absolute top-2 right-2 w-6 h-6 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Content */}
+            <div className="p-4">
+              <div className="text-center">
+                <p className="text-gray-700 text-sm mb-3">
+                  Love this design? We create professional websites for restaurants and businesses.
+                </p>
+                
+                {/* Contact Button */}
+                <button
+                  onClick={() => {
+                    window.location.href="mailto:contact.titledcreations.tech?subject=Im%20intrested%20in%20a%20website">Contact</a>
+                  }}
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full font-medium hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-lg text-sm"
+                >
+                  <span>📧</span>
+                  Send Email
+                </button>
+                
+                <p className="text-xs text-gray-500 mt-2">contact@titledcreations.tech</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Floating Blurred Balls Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
         {Array.from({ length: 15 }).map((_, i) => (
