@@ -16,6 +16,7 @@ export const Desktop = (): JSX.Element => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [showContactPopup, setShowContactPopup] = useState(false);
+  const [isPopupAnimating, setIsPopupAnimating] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
 
   // Navigation menu items
@@ -379,11 +380,24 @@ export const Desktop = (): JSX.Element => {
 
   const openContactPopup = () => {
     setShowContactPopup(true);
+    setIsPopupAnimating(false); // Start with animation false, useEffect will set it to true
   };
 
   const closeContactPopup = () => {
-    setShowContactPopup(false);
+    setIsPopupAnimating(false);
+    setTimeout(() => {
+      setShowContactPopup(false);
+    }, 300); // Match the transition duration
   };
+
+  useEffect(() => {
+    if (showContactPopup) {
+      // Small delay to ensure the popup is mounted before animating
+      setTimeout(() => {
+        setIsPopupAnimating(true);
+      }, 10);
+    }
+  }, [showContactPopup]);
 
   return (
     <div className="bg-[#f6d590] min-h-screen w-full">
@@ -1046,14 +1060,22 @@ export const Desktop = (): JSX.Element => {
         </div>
       </footer>
 
-      {/* Contact Popup - Smaller and more compact */}
+      {/* Contact Popup - Smooth slide-in/out with blur effects */}
       {showContactPopup && (
         <div 
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+          className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 transition-all duration-300 ease-out ${
+            isPopupAnimating 
+              ? 'bg-black/40 backdrop-blur-md' 
+              : 'bg-black/0 backdrop-blur-none'
+          }`}
           onClick={closeContactPopup}
         >
           <div 
-            className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden transform transition-all duration-300 scale-100"
+            className={`bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden transform transition-all duration-300 ease-out ${
+              isPopupAnimating 
+                ? 'scale-100 translate-y-0 opacity-100 blur-none' 
+                : 'scale-90 translate-y-8 opacity-0 blur-sm'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -1094,11 +1116,11 @@ export const Desktop = (): JSX.Element => {
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-green-500">✓</span>
-                      SEO optimization
+                      *Optionally deployment
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-green-500">✓</span>
-                      Fast loading & modern tech
+                      Fast and modern design
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-green-500">✓</span>
