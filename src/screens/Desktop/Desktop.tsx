@@ -191,8 +191,8 @@ export const Desktop = (): JSX.Element => {
         },
         {
           name: "CHILI CON CARNE",
-          description: "",
-          price: ""
+          description: "Riisi, jauheliha, chili, tomaattikastike ja papu",
+          price: "13,50€"
         }
       ]
     },
