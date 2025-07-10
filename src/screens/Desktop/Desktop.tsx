@@ -15,6 +15,7 @@ export const Desktop = (): JSX.Element => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [showContactPopup, setShowContactPopup] = useState(false);
 
   // Navigation menu items
   const navItems = [
@@ -373,6 +374,14 @@ export const Desktop = (): JSX.Element => {
 
   const toggleCategory = (categoryKey: string) => {
     setExpandedCategory(expandedCategory === categoryKey ? null : categoryKey);
+  };
+
+  const openContactPopup = () => {
+    setShowContactPopup(true);
+  };
+
+  const closeContactPopup = () => {
+    setShowContactPopup(false);
   };
 
   return (
@@ -989,6 +998,14 @@ export const Desktop = (): JSX.Element => {
       <footer className="bg-gradient-to-r from-orange-600 to-red-600 py-8 md:py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-center gap-8">
+            {/* Want a site like this button */}
+            <button
+              onClick={openContactPopup}
+              className="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-full font-medium hover:bg-white/30 hover:scale-105 transition-all duration-300 shadow-lg border border-white/30"
+            >
+              Want a site like this? 🚀
+            </button>
+            
             {/* Logo */}
             <div className="flex items-center justify-center mb-4">
               <img
@@ -1027,6 +1044,59 @@ export const Desktop = (): JSX.Element => {
           </div>
         </div>
       </footer>
+
+      {/* Contact Popup */}
+      {showContactPopup && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full mx-4 overflow-hidden">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-6 text-white text-center">
+              <h3 className="text-2xl font-bold mb-2">Get Your Own Website! 🚀</h3>
+              <p className="text-orange-100">Professional web design & development</p>
+            </div>
+            
+            {/* Content */}
+            <div className="p-6">
+              <div className="text-center mb-6">
+                <p className="text-gray-700 mb-4">
+                  Love this design? We create stunning, professional websites for restaurants and businesses.
+                </p>
+                <div className="bg-orange-50 rounded-lg p-4 mb-4">
+                  <p className="text-sm text-orange-800 font-medium">
+                    ✨ Custom Design<br/>
+                    📱 Mobile Responsive<br/>
+                    ⚡ Fast Loading<br/>
+                    🎯 SEO Optimized
+                  </p>
+                </div>
+              </div>
+              
+              {/* Contact Info */}
+              <div className="text-center">
+                <p className="text-gray-600 mb-4">Get in touch for a free consultation:</p>
+                <a
+                  href="mailto:contact@titledcreations.tech?subject=Website Inquiry - Like LUNGI Site&body=Hi! I'm interested in getting a website similar to the LUNGI restaurant site. Please contact me with more information."
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full font-medium hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-lg"
+                >
+                  <span>📧</span>
+                  contact@titledcreations.tech
+                </a>
+              </div>
+            </div>
+            
+            {/* Close Button */}
+            <button
+              onClick={closeContactPopup}
+              className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+      
       {/* Floating Blurred Balls Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
         {Array.from({ length: 15 }).map((_, i) => (
