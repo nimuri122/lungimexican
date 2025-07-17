@@ -36,7 +36,14 @@ export const Desktop = (): JSX.Element => {
     },
   ];
 
-  // Detailed menu data
+  // Opening times from the image
+  const openingTimes = [
+    { day: "Ma-Pe", time: "10.30-21.00" },
+    { day: "La", time: "11.00-22.00" },
+    { day: "Su", time: "11.00-21.00" },
+  ];
+
+  // Menu data from the image
   const menuData = {
     burrito: {
       emoji: "🌯",
@@ -44,26 +51,26 @@ export const Desktop = (): JSX.Element => {
       items: [
         {
           name: "FRESH CHICKEN BURRITO",
-          description: "Nyhtokanaa, riisi, cheddarjuusto, salaatti, pico de gallo, sitruunamajonesi ja guacamole",
+          description: "Nyhtökanaa, riisi, juusto, salaatti, pico de gallo, sitruunamajoneesi ja guacamole",
           price: "12,50€"
         },
         {
           name: "SWEET PORK BURRITO",
-          description: "Possunniskaa, riisi, cheddarjuusto, salaatti, ananas, creme fraiche, salsa verde ja paprikamajonesi",
+          description: "Possunniskaa, riisi, juusto, salaatti, ananas, creme fraiche, salsa verde",
           price: "12,00€"
         },
         {
           name: "BEEFY BEEF BURRITO",
-          description: "Naudanlihaa, riisi, cheddarjuusto, salaatti, sweet corn and pea, chilimajonesi",
+          description: "Naudanlihaa, riisi, juusto, salaatti, sweet corn and bean, chilimajoneesi",
           price: "13,50€"
         },
         {
-          name: "GREEN BURRITO BURRITO",
-          description: "Seitan, riisi, cheddarjuusto, salaatti, pico de gallo ja valkosipulimajonesi",
+          name: "GREEN BURRITO",
+          description: "Seitan, riisi, juusto, salaatti, pico de gallo ja valkosipulimajoneesi",
           price: "11,00€"
         },
         {
-          name: "OMAVALINTA, BURRITO NYHTOKANALLA",
+          name: "OMAVALINTA, BURRITO NYHTÖKANALLA",
           description: "",
           price: "12,50€"
         },
@@ -90,26 +97,26 @@ export const Desktop = (): JSX.Element => {
       items: [
         {
           name: "FRESH CHICKEN QUESADILLA",
-          description: "Nyhtokanaa, cheddarjuusto, pico de gallo, sitruunamajonesi ja guacamole",
+          description: "Nyhtökanaa, juusto, pico de gallo, sitruunamajoneesi ja guacamole",
           price: "12,50€"
         },
         {
           name: "SWEET PORK QUESADILLA",
-          description: "Possunniska, cheddarjuusto, ananas, creme fraiche, salsa verde ja paprikamajonesi",
+          description: "Possunniska, juusto, ananas, creme fraiche, salsa verde",
           price: "12,00€"
         },
         {
           name: "BEEFY BEEF QUESADILLA",
-          description: "Naudanliha, cheddarjuusto, sweet corn and pea ja chilimajonesi",
+          description: "Naudanliha, juusto, sweet corn and bean ja chilimajoneesi",
           price: "13,50€"
         },
         {
-          name: "GREEN QUESADILLA QUESADILLA",
-          description: "Seitan, cheddarjuusto, pico de gallo ja valkosipulimajonesi",
+          name: "GREEN QUESADILLA",
+          description: "Seitan, juusto, pico de gallo ja valkosipulimajoneesi",
           price: "11,00€"
         },
         {
-          name: "OMAVALINTA, QUESADILLA NYHTOKANALLA",
+          name: "OMAVALINTA, QUESADILLA NYHTÖKANALLA",
           description: "",
           price: "12,50€"
         },
@@ -136,26 +143,26 @@ export const Desktop = (): JSX.Element => {
       items: [
         {
           name: "FRESH CHICKEN TACO",
-          description: "Nyhtokanaa, cheddarjuusto, pico de gallo, sitruunamajonesi ja guacamole",
+          description: "Nyhtökanaa, juusto, pico de gallo, sitruunamajoneesi ja guacamole",
           price: "12,50€"
         },
         {
           name: "SWEET PORK TACO",
-          description: "Possunniska, cheddarjuusto, ananas, creme fraiche, salsa verde ja paprikamajonesi",
+          description: "Possunniska, juusto, ananas, creme fraiche, salsa verde",
           price: "12,00€"
         },
         {
           name: "BEEFY BEEF TACO",
-          description: "Naudanliha, cheddarjuusto, sweet corn and pea, chilimajonesi",
+          description: "Naudanliha, juusto, sweet corn and bean, chilimajoneesi",
           price: "13,50€"
         },
         {
-          name: "GREEN TACO TACO",
-          description: "Seitan, cheddarjuusto, pico de gallo, valkosipulimajonesi",
+          name: "GREEN TACO",
+          description: "Seitan, juusto, pico de gallo, valkosipulimajoneesi",
           price: "11,00€"
         },
         {
-          name: "OMAVALINTA, TACO NYHTOKANALLA",
+          name: "OMAVALINTA, TACO NYHTÖKANALLA",
           description: "",
           price: "12,50€"
         },
@@ -177,24 +184,35 @@ export const Desktop = (): JSX.Element => {
       ],
       note: "SISÄLTÄÄ 3 TACOA JA MAISSIN"
     },
-    pihvi: {
-      emoji: "🥩",
-      name: "PIHVI",
+    naposteltavat: {
+      emoji: "🍟",
+      name: "Naposteltavat",
       items: [
         {
-          name: "JAUHELIHAPIHVI",
-          description: "Uunissa paistettu kanajauhelihapihvi 200g, riisillä, lohkoperunoilla tai leivällä, talon kastike, salaatti",
-          price: "13,00€"
+          name: "MAISSILASTUT JA DIPPI",
+          description: "",
+          price: "2,50€"
         },
         {
-          name: "KANAJAUHELIHAPIHVI",
-          description: "Uunissa paistettu kanajauhelihapihvi 200g, riisillä, lohkoperunoilla tai leivällä, currykastike, salaatti",
-          price: "12,00€"
+          name: "JALAPENO POPPERS",
+          description: "",
+          price: "3,50€"
+        }
+      ]
+    },
+    juomat: {
+      emoji: "�",
+      name: "JUOMAT",
+      items: [
+        {
+          name: "0,5L LIMU",
+          description: "",
+          price: "3,50€"
         },
         {
-          name: "CHILI CON CARNE",
-          description: "Riisi, jauheliha, chili, tomaattikastike ja papu",
-          price: "13,50€"
+          name: "0,5L VESI",
+          description: "",
+          price: "2,00€"
         }
       ]
     },
@@ -202,84 +220,20 @@ export const Desktop = (): JSX.Element => {
       emoji: "🥑",
       name: "DIPIT",
       items: [
-        {
-          name: "CHILI",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "VALKOSIPULI",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "MEXICANA",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "BBQ",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "PAPRIKA",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "GUACAMOLE",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "SOUR CREAM",
-          description: "",
-          price: "1€"
-        }
+        { name: "CHILI", description: "", price: "1€" },
+        { name: "VALKOSIPULI", description: "", price: "1€" },
+        { name: "CHIPOTLE", description: "", price: "1€" },
+        { name: "BBQ", description: "", price: "1€" },
+        { name: "PAPRIKA", description: "", price: "1€" },
+        { name: "GUACAMOLE", description: "", price: "1€" },
+        { name: "SOUR CREAM", description: "", price: "1€" },
       ]
     },
     pienet: {
       emoji: "🍽️",
       name: "PIENET",
       items: [
-        {
-          name: "MEKSIKON MAISSI",
-          description: "",
-          price: "5€"
-        },
-        {
-          name: "MEKSIKON HERNE",
-          description: "",
-          price: "5€"
-        }
-      ]
-    },
-    juomat: {
-      emoji: "🥤",
-      name: "JUOMAT",
-      items: [
-        {
-          name: "0,5 PULLO",
-          description: "",
-          price: "3,50€"
-        }
-      ]
-    },
-    ateria: {
-      emoji: "🍽️",
-      name: "ATERIA / LISUKEET",
-      items: [
-        {
-          name: "MAISSILASTUT JA DIPPI",
-          description: "",
-          price: "2,50€ (JUOMA 0,5 +1€)"
-        },
-        {
-          name: "JALAPENO POPPERS",
-          description: "",
-          price: "3,50€ (JUOMA 0,5 +1€)"
-        }
+        { name: "MEKSIKON MAISSI", description: "", price: "5€" }
       ]
     }
   };
@@ -341,33 +295,39 @@ export const Desktop = (): JSX.Element => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % foodImages.length);
-    }, 4000);
-
-    return () => clearInterval(timer);
-  }, [foodImages.length]);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % foodImages.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + foodImages.length) % foodImages.length);
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
+  return (
+    <div className="bg-[#f6d590] min-h-screen w-full">
+      {isLoading && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
+          <div className="text-center">
+            <img
+              src="/Group 7 (1).png"
+              alt="Lungi Restaurant Logo"
+              className="h-32 w-auto mx-auto mb-8 animate-pulse"
+            />
+            <div className="w-16 h-16 border-4 border-t-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          </div>
+        </div>
+      )}
+      {/* Header section */}
+      <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-orange-200 to-yellow-200 shadow-md">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <div className="flex items-center">
+              <img
+                src="/Group 7 (1).png"
+                alt="Lungi Restaurant Logo"
+                className="h-12 w-auto md:h-16 object-contain"
+              />
+            </div>
+            {/* Opening times (desktop) */}
+            <div className="hidden md:flex flex-col items-end text-[#a05a00] font-bold text-lg leading-tight">
+              <span>Aukioloajat</span>
+              {openingTimes.map((ot, i) => (
+                <span key={i}>{ot.day} {ot.time}</span>
+              ))}
+            </div>
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
