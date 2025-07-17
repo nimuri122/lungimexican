@@ -102,12 +102,12 @@ export const Desktop = (): JSX.Element => {
         },
         {
           name: "SWEET PORK QUESADILLA",
-          description: "Possunniska, juusto, ananas, creme fraiche, salsa verde",
+          description: "Possunniskaa, juusto, ananas, creme fraiche, salsa verde",
           price: "12,00€"
         },
         {
           name: "BEEFY BEEF QUESADILLA",
-          description: "Naudanliha, juusto, sweet corn and bean ja chilimajoneesi",
+          description: "Naudanlihaa, juusto, sweet corn and bean ja chilimajoneesi",
           price: "13,50€"
         },
         {
@@ -148,12 +148,12 @@ export const Desktop = (): JSX.Element => {
         },
         {
           name: "SWEET PORK TACO",
-          description: "Possunniska, juusto, ananas, creme fraiche, salsa verde",
+          description: "Possunniskaa, juusto, ananas, creme fraiche, salsa verde",
           price: "12,00€"
         },
         {
           name: "BEEFY BEEF TACO",
-          description: "Naudanliha, juusto, sweet corn and bean, chilimajoneesi",
+          description: "Naudanlihaa, juusto, sweet corn and bean, chilimajoneesi",
           price: "13,50€"
         },
         {
@@ -888,9 +888,9 @@ export const Desktop = (): JSX.Element => {
               <Card className="bg-white/80 rounded-2xl shadow-lg">
                 <CardContent className="p-6">
                   <div className="space-y-2 text-center">
-                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Ma–To: 10:00–22:00</p>
-                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Pe–La: 10:00–23:00</p>
-                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Su: 10:30–22:00</p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Ma–Pe: 10:30–21:00</p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium">La: 11:00–22:00</p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Su: 11:00–21:00</p>
                   </div>
                 </CardContent>
               </Card>
