@@ -102,12 +102,12 @@ export const Desktop = (): JSX.Element => {
         },
         {
           name: "SWEET PORK QUESADILLA",
-          description: "Possunniska, juusto, ananas, creme fraiche, salsa verde",
+          description: "Possunniskaa, juusto, ananas, creme fraiche, salsa verde",
           price: "12,00€"
         },
         {
           name: "BEEFY BEEF QUESADILLA",
-          description: "Naudanliha, juusto, sweet corn and bean ja chilimajoneesi",
+          description: "Naudanlihaa, juusto, sweet corn and bean ja chilimajoneesi",
           price: "13,50€"
         },
         {
@@ -148,12 +148,12 @@ export const Desktop = (): JSX.Element => {
         },
         {
           name: "SWEET PORK TACO",
-          description: "Possunniska, juusto, ananas, creme fraiche, salsa verde",
+          description: "Possunniskaa, juusto, ananas, creme fraiche, salsa verde",
           price: "12,00€"
         },
         {
           name: "BEEFY BEEF TACO",
-          description: "Naudanliha, juusto, sweet corn and bean, chilimajoneesi",
+          description: "Naudanlihaa, juusto, sweet corn and bean, chilimajoneesi",
           price: "13,50€"
         },
         {
@@ -201,7 +201,7 @@ export const Desktop = (): JSX.Element => {
       ]
     },
     juomat: {
-      emoji: "�",
+      emoji: "🥤",
       name: "JUOMAT",
       items: [
         {
@@ -295,42 +295,36 @@ export const Desktop = (): JSX.Element => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % foodImages.length);
-  return (
-    <div className="bg-[#f6d590] min-h-screen w-full">
-      {isLoading && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
-          <div className="text-center">
-            <img
-              src="/Group 7 (1).png"
-              alt="Lungi Restaurant Logo"
-              className="h-32 w-auto mx-auto mb-8 animate-pulse"
-            />
-            <div className="w-16 h-16 border-4 border-t-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          </div>
-        </div>
-      )}
-      {/* Header section */}
-      <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-orange-200 to-yellow-200 shadow-md">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <div className="flex items-center">
-              <img
-                src="/Group 7 (1).png"
-                alt="Lungi Restaurant Logo"
-                className="h-12 w-auto md:h-16 object-contain"
-              />
-            </div>
-            {/* Opening times (desktop) */}
-            <div className="hidden md:flex flex-col items-end text-[#a05a00] font-bold text-lg leading-tight">
-              <span>Aukioloajat</span>
-              {openingTimes.map((ot, i) => (
-                <span key={i}>{ot.day} {ot.time}</span>
-              ))}
-            </div>
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [foodImages.length]);
+
+  // Helper functions
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % foodImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + foodImages.length) % foodImages.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
   };
 
   const toggleCategory = (categoryKey: string) => {
@@ -347,7 +341,6 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <div className="bg-[#f6d590] min-h-screen w-full">
-      
       {isLoading && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
           <div className="text-center">
@@ -895,9 +888,9 @@ export const Desktop = (): JSX.Element => {
               <Card className="bg-white/80 rounded-2xl shadow-lg">
                 <CardContent className="p-6">
                   <div className="space-y-2 text-center">
-                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Ma–To: 10:00–22:00</p>
-                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Pe–La: 10:00–23:00</p>
-                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Su: 10:30–22:00</p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Ma–Pe: 10:30–21:00</p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium">La: 11:00–22:00</p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Su: 11:00–21:00</p>
                   </div>
                 </CardContent>
               </Card>
@@ -993,15 +986,11 @@ export const Desktop = (): JSX.Element => {
             {/* Copyright */}
             <div className="text-center text-white/60 text-sm border-t border-white/20 pt-4 w-full">
               <p>&copy; 2025 LUNGI Mexican Food. Kaikki oikeudet pidätetään.</p>
-              
-              
             </div>
           </div>
         </div>
       </footer>
 
-      
-      
       {/* Floating Blurred Balls Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
         {Array.from({ length: 15 }).map((_, i) => (
