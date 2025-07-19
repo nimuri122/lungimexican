@@ -917,7 +917,7 @@ export const Desktop = (): JSX.Element => {
                       </a>
                     </p>
                     <p className="text-lg md:text-xl text-[#c06806] font-medium flex items-start gap-3">
-                      <span>📍</span> Kylänvanhimmantie 29, huone 18, 00640 Helsinki
+                      <span>📍</span> Kylänvanhimmantie 29, 00640 Helsinki
                     </p>
                   </div>
                 </CardContent>
