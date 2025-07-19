@@ -846,7 +846,7 @@ export const Desktop = (): JSX.Element => {
                   <div className="w-24 h-24 md:w-32 md:h-32 bg-orange-500 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6 shadow-lg">
                     <span className="text-white text-3xl md:text-4xl">📍</span>
                   </div>
-                  <p className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Kylänvanhimmantie 29, huone 18</p>
+                  <p className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Kylänvanhimmantie 29</p>
                   <p className="text-lg md:text-xl text-gray-600 mb-4">00640 Helsinki</p>
                   <a 
                     href="https://maps.google.com/?q=Kylänvanhimmantie+29,+00640+Helsinki"
