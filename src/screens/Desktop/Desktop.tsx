@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { Card, CardContent } from "../../components/ui/card";
 import { CountdownTimer } from "../../components/CountdownTimer";
 
@@ -340,7 +341,8 @@ export const Desktop = (): JSX.Element => {
   };
 
   return (
-    <div className="bg-[#f6d590] min-h-screen w-full">
+    <>
+      <div className="bg-[#f6d590] min-h-screen w-full">
       {isLoading && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
           <div className="text-center">
@@ -1014,6 +1016,7 @@ export const Desktop = (): JSX.Element => {
           />
         ))}
       </div>
-    </div>
+      <Analytics />
+    </>
   );
 };
