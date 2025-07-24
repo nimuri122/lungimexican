@@ -341,7 +341,7 @@ export const Desktop = (): JSX.Element => {
   };
 
   return (
-    <>
+    <React.Fragment>
       <div className="bg-[#f6d590] min-h-screen w-full">
       {isLoading && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
@@ -1016,7 +1016,9 @@ export const Desktop = (): JSX.Element => {
           />
         ))}
       </div>
-      <Analytics />
-    </>
+      {/* Close main div before Analytics and fragment closing */}
+    </div>
+    <Analytics />
+  </React.Fragment>
   );
 };
