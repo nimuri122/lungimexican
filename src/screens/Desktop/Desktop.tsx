@@ -912,6 +912,12 @@ export const Desktop = (): JSX.Element => {
                         +358 45 845 4258
                       </a>
                     </p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium flex items-center gap-3">
+                      <span>✉️</span>
+                      <a href="mailto:Lungimexcianfood@gmail.com" className="hover:text-orange-700 transition-colors duration-200">
+                        Lungimexcianfood@gmail.com
+                      </a>
+                    </p>
                     <p className="text-lg md:text-xl text-[#c06806] font-medium flex items-start gap-3">
                       <span>📍</span> Kylänvanhimmantie 29, 00640 Helsinki
                     </p>
