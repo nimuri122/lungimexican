@@ -41,15 +41,14 @@ export const Desktop = (): JSX.Element => {
     },
   ];
 
-  // Opening times from the image
-  const openingTimes = [
-    { day: "Ma-Pe", time: "10.30-21.00" },
-    { day: "La", time: "11.00-22.00" },
-    { day: "Su", time: "11.00-21.00" },
-  ];
+  // (Opening times array removed – was unused)
+
+  // Types for menu structure
+  interface MenuItem { name: string; description: string; price: string; }
+  interface MenuCategory { emoji: string; name: string; items: MenuItem[]; note?: string }
 
   // Menu data from the image
-  const menuData = {
+  const menuData: Record<string, MenuCategory> = {
     burrito: {
       emoji: "🌯",
       name: "BURRITO",
@@ -531,9 +530,8 @@ export const Desktop = (): JSX.Element => {
                       alt={image.alt}
                       src={image.src}
                     />
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                      <h3 className="text-white text-2xl md:text-3xl font-bold">{image.title}</h3>
-                    </div>
+                    {/* Faint vignette overlay */}
+                    <div className="absolute inset-0 pointer-events-none [background:radial-gradient(circle_at_center,rgba(0,0,0,0)_60%,rgba(0,0,0,0.28))] mix-blend-multiply"></div>
                   </div>
                 ))}
               </div>
@@ -541,7 +539,7 @@ export const Desktop = (): JSX.Element => {
             
             {/* Stock photo disclaimer */}
             <p className="text-xs text-gray-500 text-center mt-2 opacity-70">
-              *Stock images for illustration purposes
+              *Stock images for illustration purposes, actual images coming soon.
             </p>
 
             {/* Navigation Arrows */}
@@ -1136,7 +1134,11 @@ export const Desktop = (): JSX.Element => {
                     const y = ((e.clientY - rect.top) / rect.height) * 100;
                     setCopyGlow(g => ({ ...g, x, y }));
                   }}
-                  className={`relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-sm md:text-base font-semibold text-white transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-lg overflow-hidden group ${copyFeedback ? 'bg-green-500' : 'bg-gradient-to-r from-orange-500 via-red-500 to-amber-500 hover:brightness-110'}`}
+                  className={`relative inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-4 text-sm md:text-base font-semibold text-white transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-orange-300 shadow-lg overflow-hidden group 
+                    ${copyFeedback 
+                      ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 animate-soft-pulse' 
+                      : 'bg-[linear-gradient(110deg,#ff7a18,45%,#ffb347,60%,#ff7a18)] bg-[length:200%_200%] animate-luxe-gradient animate-soft-pulse'}
+                    hover:scale-[1.03] active:scale-[0.97]`}
                   aria-live="polite"
                 >
                   {/* Dynamic light following cursor */}
@@ -1147,10 +1149,14 @@ export const Desktop = (): JSX.Element => {
                       opacity: copyGlow.active ? 1 : 0,
                     }}
                   />
+                  {/* Sheen sweep */}
+                  <span className="pointer-events-none absolute inset-0 overflow-hidden">
+                    <span className="absolute top-0 left-0 w-1/3 h-full opacity-0 group-hover:opacity-100 bg-gradient-to-r from-white/10 via-white/60 to-white/10 animate-sheen-sweep" />
+                  </span>
                   {/* Static subtle texture */}
-                  <span className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-500 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_60%)]" />
-                  <span className="relative text-base drop-shadow">{copyFeedback ? '✅' : '📋'}</span>
-                  <span className="relative tracking-wide drop-shadow-sm">
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-500 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.28),transparent_65%)]" />
+                  <span className="relative text-base drop-shadow animate-reveal-up delay-[30ms]">{copyFeedback ? '✅' : '📋'}</span>
+                  <span className="relative tracking-wide drop-shadow-sm animate-reveal-up delay-[90ms]">
                     {copyFeedback ? 'Copied to Clipboard!' : 'Copy Email'}
                   </span>
                 </button>
