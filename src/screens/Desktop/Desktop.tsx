@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Card, CardContent } from "../../components/ui/card";
 import { CountdownTimer } from "../../components/CountdownTimer";
 
@@ -37,7 +39,14 @@ export const Desktop = (): JSX.Element => {
     },
   ];
 
-  // Detailed menu data
+  // Opening times from the image
+  const openingTimes = [
+    { day: "Ma-Pe", time: "10.30-21.00" },
+    { day: "La", time: "11.00-22.00" },
+    { day: "Su", time: "11.00-21.00" },
+  ];
+
+  // Menu data from the image
   const menuData = {
     burrito: {
       emoji: "🌯",
@@ -45,26 +54,26 @@ export const Desktop = (): JSX.Element => {
       items: [
         {
           name: "FRESH CHICKEN BURRITO",
-          description: "Nyhtokanaa, riisi, cheddarjuusto, salaatti, pico de gallo, sitruunamajonesi ja guacamole",
+          description: "Nyhtökanaa, riisi, juusto, salaatti, pico de gallo, sitruunamajoneesi ja guacamole",
           price: "12,50€"
         },
         {
           name: "SWEET PORK BURRITO",
-          description: "Possunniskaa, riisi, cheddarjuusto, salaatti, ananas, creme fraiche, salsa verde ja paprikamajonesi",
+          description: "Possunniskaa, riisi, juusto, salaatti, ananas, creme fraiche, salsa verde",
           price: "12,00€"
         },
         {
           name: "BEEFY BEEF BURRITO",
-          description: "Naudanlihaa, riisi, cheddarjuusto, salaatti, sweet corn and pea, chilimajonesi",
+          description: "Naudanlihaa, riisi, juusto, salaatti, sweet corn and bean, chilimajoneesi",
           price: "13,50€"
         },
         {
-          name: "GREEN BURRITO BURRITO",
-          description: "Seitan, riisi, cheddarjuusto, salaatti, pico de gallo ja valkosipulimajonesi",
+          name: "GREEN BURRITO",
+          description: "Seitan, riisi, juusto, salaatti, pico de gallo ja valkosipulimajoneesi",
           price: "11,00€"
         },
         {
-          name: "OMAVALINTA, BURRITO NYHTOKANALLA",
+          name: "OMAVALINTA, BURRITO NYHTÖKANALLA",
           description: "",
           price: "12,50€"
         },
@@ -91,26 +100,26 @@ export const Desktop = (): JSX.Element => {
       items: [
         {
           name: "FRESH CHICKEN QUESADILLA",
-          description: "Nyhtokanaa, cheddarjuusto, pico de gallo, sitruunamajonesi ja guacamole",
+          description: "Nyhtökanaa, juusto, pico de gallo, sitruunamajoneesi ja guacamole",
           price: "12,50€"
         },
         {
           name: "SWEET PORK QUESADILLA",
-          description: "Possunniska, cheddarjuusto, ananas, creme fraiche, salsa verde ja paprikamajonesi",
+          description: "Possunniskaa, juusto, ananas, creme fraiche, salsa verde",
           price: "12,00€"
         },
         {
           name: "BEEFY BEEF QUESADILLA",
-          description: "Naudanliha, cheddarjuusto, sweet corn and pea ja chilimajonesi",
+          description: "Naudanlihaa, juusto, sweet corn and bean ja chilimajoneesi",
           price: "13,50€"
         },
         {
-          name: "GREEN QUESADILLA QUESADILLA",
-          description: "Seitan, cheddarjuusto, pico de gallo ja valkosipulimajonesi",
+          name: "GREEN QUESADILLA",
+          description: "Seitan, juusto, pico de gallo ja valkosipulimajoneesi",
           price: "11,00€"
         },
         {
-          name: "OMAVALINTA, QUESADILLA NYHTOKANALLA",
+          name: "OMAVALINTA, QUESADILLA NYHTÖKANALLA",
           description: "",
           price: "12,50€"
         },
@@ -137,26 +146,26 @@ export const Desktop = (): JSX.Element => {
       items: [
         {
           name: "FRESH CHICKEN TACO",
-          description: "Nyhtokanaa, cheddarjuusto, pico de gallo, sitruunamajonesi ja guacamole",
+          description: "Nyhtökanaa, juusto, pico de gallo, sitruunamajoneesi ja guacamole",
           price: "12,50€"
         },
         {
           name: "SWEET PORK TACO",
-          description: "Possunniska, cheddarjuusto, ananas, creme fraiche, salsa verde ja paprikamajonesi",
+          description: "Possunniskaa, juusto, ananas, creme fraiche, salsa verde",
           price: "12,00€"
         },
         {
           name: "BEEFY BEEF TACO",
-          description: "Naudanliha, cheddarjuusto, sweet corn and pea, chilimajonesi",
+          description: "Naudanlihaa, juusto, sweet corn and bean, chilimajoneesi",
           price: "13,50€"
         },
         {
-          name: "GREEN TACO TACO",
-          description: "Seitan, cheddarjuusto, pico de gallo, valkosipulimajonesi",
+          name: "GREEN TACO",
+          description: "Seitan, juusto, pico de gallo, valkosipulimajoneesi",
           price: "11,00€"
         },
         {
-          name: "OMAVALINTA, TACO NYHTOKANALLA",
+          name: "OMAVALINTA, TACO NYHTÖKANALLA",
           description: "",
           price: "12,50€"
         },
@@ -178,81 +187,19 @@ export const Desktop = (): JSX.Element => {
       ],
       note: "SISÄLTÄÄ 3 TACOA JA MAISSIN"
     },
-    pihvi: {
-      emoji: "🥩",
-      name: "PIHVI",
+    naposteltavat: {
+      emoji: "🍟",
+      name: "Naposteltavat",
       items: [
         {
-          name: "JAUHELIHAPIHVI",
-          description: "Uunissa paistettu kanajauhelihapihvi 200g, riisillä, lohkoperunoilla tai leivällä, talon kastike, salaatti",
-          price: "13,00€"
+          name: "MAISSILASTUT JA DIPPI",
+          description: "",
+          price: "2,50€"
         },
         {
-          name: "KANAJAUHELIHAPIHVI",
-          description: "Uunissa paistettu kanajauhelihapihvi 200g, riisillä, lohkoperunoilla tai leivällä, currykastike, salaatti",
-          price: "12,00€"
-        },
-        {
-          name: "CHILI CON CARNE",
-          description: "Riisi, jauheliha, chili, tomaattikastike ja papu",
-          price: "13,50€"
-        }
-      ]
-    },
-    dipit: {
-      emoji: "🥑",
-      name: "DIPIT",
-      items: [
-        {
-          name: "CHILI",
+          name: "JALAPENO POPPERS",
           description: "",
-          price: "1€"
-        },
-        {
-          name: "VALKOSIPULI",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "MEXICANA",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "BBQ",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "PAPRIKA",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "GUACAMOLE",
-          description: "",
-          price: "1€"
-        },
-        {
-          name: "SOUR CREAM",
-          description: "",
-          price: "1€"
-        }
-      ]
-    },
-    pienet: {
-      emoji: "🍽️",
-      name: "PIENET",
-      items: [
-        {
-          name: "MEKSIKON MAISSI",
-          description: "",
-          price: "5€"
-        },
-        {
-          name: "MEKSIKON HERNE",
-          description: "",
-          price: "5€"
+          price: "3,50€"
         }
       ]
     },
@@ -261,26 +208,35 @@ export const Desktop = (): JSX.Element => {
       name: "JUOMAT",
       items: [
         {
-          name: "0,5 PULLO",
+          name: "0,5L LIMU",
           description: "",
           price: "3,50€"
+        },
+        {
+          name: "0,5L VESI",
+          description: "",
+          price: "2,00€"
         }
       ]
     },
-    ateria: {
-      emoji: "🍽️",
-      name: "ATERIA / LISUKEET",
+    dipit: {
+      emoji: "🥑",
+      name: "DIPIT",
       items: [
-        {
-          name: "MAISSILASTUT JA DIPPI",
-          description: "",
-          price: "2,50€ (JUOMA 0,5 +1€)"
-        },
-        {
-          name: "JALAPENO POPPERS",
-          description: "",
-          price: "3,50€ (JUOMA 0,5 +1€)"
-        }
+        { name: "CHILI", description: "", price: "1€" },
+        { name: "VALKOSIPULI", description: "", price: "1€" },
+        { name: "CHIPOTLE", description: "", price: "1€" },
+        { name: "BBQ", description: "", price: "1€" },
+        { name: "PAPRIKA", description: "", price: "1€" },
+        { name: "GUACAMOLE", description: "", price: "1€" },
+        { name: "SOUR CREAM", description: "", price: "1€" },
+      ]
+    },
+    pienet: {
+      emoji: "🍽️",
+      name: "PIENET",
+      items: [
+        { name: "MEKSIKON MAISSI", description: "", price: "5€" }
       ]
     }
   };
@@ -342,10 +298,17 @@ export const Desktop = (): JSX.Element => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % foodImages.length);
-    }, 4000);
-
+    }, 5000);
     return () => clearInterval(timer);
   }, [foodImages.length]);
+
+  // Helper functions
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -365,13 +328,6 @@ export const Desktop = (): JSX.Element => {
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
-  };
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
   };
 
   const toggleCategory = (categoryKey: string) => {
@@ -400,8 +356,8 @@ export const Desktop = (): JSX.Element => {
   }, [showContactPopup]);
 
   return (
-    <div className="bg-[#f6d590] min-h-screen w-full">
-      
+    <React.Fragment>
+      <div className="bg-[#f6d590] min-h-screen w-full">
       {isLoading && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
           <div className="text-center">
@@ -907,7 +863,7 @@ export const Desktop = (): JSX.Element => {
                   <div className="w-24 h-24 md:w-32 md:h-32 bg-orange-500 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6 shadow-lg">
                     <span className="text-white text-3xl md:text-4xl">📍</span>
                   </div>
-                  <p className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Kylänvanhimmantie 29, huone 18</p>
+                  <p className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Kylänvanhimmantie 29</p>
                   <p className="text-lg md:text-xl text-gray-600 mb-4">00640 Helsinki</p>
                   <a 
                     href="https://maps.google.com/?q=Kylänvanhimmantie+29,+00640+Helsinki"
@@ -949,9 +905,9 @@ export const Desktop = (): JSX.Element => {
               <Card className="bg-white/80 rounded-2xl shadow-lg">
                 <CardContent className="p-6">
                   <div className="space-y-2 text-center">
-                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Ma–To: 10:00–22:00</p>
-                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Pe–La: 10:00–23:00</p>
-                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Su: 10:30–22:00</p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Ma–Pe: 10:30–21:00</p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium">La: 11:00–22:00</p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium">Su: 11:00–21:00</p>
                   </div>
                 </CardContent>
               </Card>
@@ -970,8 +926,14 @@ export const Desktop = (): JSX.Element => {
                         +358 45 845 4258
                       </a>
                     </p>
+                    <p className="text-lg md:text-xl text-[#c06806] font-medium flex items-center gap-3">
+                      <span>✉️</span>
+                      <a href="mailto:Lungimexcianfood@gmail.com" className="hover:text-orange-700 transition-colors duration-200">
+                        Lungimexcianfood@gmail.com
+                      </a>
+                    </p>
                     <p className="text-lg md:text-xl text-[#c06806] font-medium flex items-start gap-3">
-                      <span>📍</span> Kylänvanhimmantie 29, huone 18, 00640 Helsinki
+                      <span>📍</span> Kylänvanhimmantie 29, 00640 Helsinki
                     </p>
                   </div>
                 </CardContent>
@@ -1047,125 +1009,11 @@ export const Desktop = (): JSX.Element => {
             {/* Copyright */}
             <div className="text-center text-white/60 text-sm border-t border-white/20 pt-4 w-full">
               <p>&copy; 2025 LUNGI Mexican Food. Kaikki oikeudet pidätetään.</p>
-              
-              {/* Want a site like this button - moved to bottom */}
-              <button
-                onClick={openContactPopup}
-                className="mt-3 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-white/30 hover:scale-105 transition-all duration-300 shadow-lg border border-white/30"
-              >
-                Want a site like this? 🚀
-              </button>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* Contact Popup - Smooth slide-in/out with blur effects */}
-      {showContactPopup && (
-        <div 
-          className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 transition-all duration-300 ease-out ${
-            isPopupAnimating 
-              ? 'bg-black/40 backdrop-blur-md' 
-              : 'bg-black/0 backdrop-blur-none'
-          }`}
-          onClick={closeContactPopup}
-        >
-          <div 
-            className={`bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden transform transition-all duration-300 ease-out ${
-              isPopupAnimating 
-                ? 'scale-100 translate-y-0 opacity-100 blur-none' 
-                : 'scale-90 translate-y-8 opacity-0 blur-sm'
-            }`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-6 text-white text-center relative">
-              <div className="text-4xl mb-3">🚀</div>
-              <h3 className="text-2xl font-bold mb-2">Want a Website Like This?</h3>
-              <p className="text-orange-100">Professional web design & development</p>
-              
-              {/* Close Button */}
-              <button
-                onClick={closeContactPopup}
-                className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            
-            {/* Content */}
-            <div className="p-6">
-              <div className="text-center">
-                <p className="text-gray-700 mb-4 leading-relaxed">
-                  Love this design? We create stunning, professional websites for restaurants, businesses, and entrepreneurs.
-                </p>
-                
-                {/* Features */}
-                <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
-                  <h4 className="font-bold text-gray-800 mb-3 text-center">What you get:</h4>
-                  <ul className="space-y-2 text-sm text-gray-600">
-                    <li className="flex items-center gap-2">
-                      <span className="text-green-500">✓</span>
-                      Custom responsive design
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="text-green-500">✓</span>
-                      Mobile-optimized experience
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="text-green-500">✓</span>
-                      *Optionally deployment
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="text-green-500">✓</span>
-                      Fast and modern design
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="text-green-500">✓</span>
-                      Professional support
-                    </li>
-                  </ul>
-                </div>
-                
-                {/* Contact Button */}
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText("contact@titledcreations.tech").then(() => {
-                      setCopyFeedback(true);
-                      setTimeout(() => setCopyFeedback(false), 2000);
-                    }).catch(() => {
-                      // Fallback for older browsers
-                      const textArea = document.createElement("textarea");
-                      textArea.value = "contact@titledcreations.tech";
-                      document.body.appendChild(textArea);
-                      textArea.select();
-                      document.execCommand("copy");
-                      document.body.removeChild(textArea);
-                      setCopyFeedback(true);
-                      setTimeout(() => setCopyFeedback(false), 2000);
-                    });
-                  }}
-                  className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full font-medium hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-                >
-                  <span>{copyFeedback ? "✓" : "📋"}</span>
-                  {copyFeedback ? "Copied!" : "Copy Email"}
-                </button>
-                
-                <p className="text-sm text-gray-500 mt-3 font-mono">contact@titledcreations.tech</p>
-                
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                  <p className="text-xs text-gray-400">
-                    Professional web development services
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      
       {/* Floating Blurred Balls Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
         {Array.from({ length: 15 }).map((_, i) => (
@@ -1189,6 +1037,10 @@ export const Desktop = (): JSX.Element => {
           />
         ))}
       </div>
+      {/* Close main div before Analytics and fragment closing */}
     </div>
+    <Analytics />
+    <SpeedInsights />
+  </React.Fragment>
   );
 };
