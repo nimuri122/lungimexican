@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Card, CardContent } from "../../components/ui/card";
@@ -22,6 +22,65 @@ export const Desktop = (): JSX.Element => {
   const [copyFeedback, setCopyFeedback] = useState(false);
   // Glow effect position for copy email button
   const [copyGlow, setCopyGlow] = useState({ x: 50, y: 50, active: false });
+  // Carousel drag state
+  const [dragState, setDragState] = useState<{ dragging: boolean; startX: number; currentX: number; width: number; slideStart: number }>({
+    dragging: false,
+    startX: 0,
+    currentX: 0,
+    width: 1,
+    slideStart: 0
+  });
+  const carouselTrackRef = useRef<HTMLDivElement | null>(null);
+
+  const beginDrag = (clientX: number) => {
+    if (!carouselTrackRef.current) return;
+    const width = carouselTrackRef.current.offsetWidth;
+    setDragState({ dragging: true, startX: clientX, currentX: clientX, width, slideStart: currentSlide });
+  };
+  const updateDrag = (clientX: number) => {
+    setDragState(prev => prev.dragging ? { ...prev, currentX: clientX } : prev);
+  };
+  const endDrag = () => {
+    setDragState(prev => {
+      if (!prev.dragging) return prev;
+      const deltaX = prev.currentX - prev.startX;
+      const threshold = prev.width * 0.15; // 15% swipe threshold
+      if (deltaX > threshold && prev.slideStart > 0) {
+        prev.slideStart !== currentSlide && setCurrentSlide(prev.slideStart); // sync if changed externally
+        prev.slideStart > 0 && setCurrentSlide(prev.slideStart - 1);
+      } else if (deltaX < -threshold && prev.slideStart < foodImages.length - 1) {
+        prev.slideStart !== currentSlide && setCurrentSlide(prev.slideStart);
+        prev.slideStart < foodImages.length - 1 && setCurrentSlide(prev.slideStart + 1);
+      }
+      return { ...prev, dragging: false };
+    });
+  };
+
+  const handlePointerDown: React.PointerEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    beginDrag(e.clientX);
+  };
+  const handlePointerMove: React.PointerEventHandler<HTMLDivElement> = (e) => {
+    if (!dragState.dragging) return;
+    updateDrag(e.clientX);
+  };
+  const handlePointerUp: React.PointerEventHandler<HTMLDivElement> = (e) => {
+    (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    endDrag();
+  };
+
+  // Touch (iOS Safari passive listeners) fallback using pointer not strictly needed, but ensure support if pointer events not fired
+  const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    beginDrag(e.touches[0].clientX);
+  };
+  const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    if (!dragState.dragging) return;
+    updateDrag(e.touches[0].clientX);
+  };
+  const handleTouchEnd: React.TouchEventHandler<HTMLDivElement> = () => {
+    endDrag();
+  };
 
   // Navigation menu items
   const navItems = [
@@ -41,15 +100,12 @@ export const Desktop = (): JSX.Element => {
     },
   ];
 
-  // Opening times from the image
-  const openingTimes = [
-    { day: "Ma-Pe", time: "10.30-21.00" },
-    { day: "La", time: "11.00-22.00" },
-    { day: "Su", time: "11.00-21.00" },
-  ];
+  // (Opening times data removed - unused)
 
   // Menu data from the image
-  const menuData = {
+  interface MenuItem { name: string; description: string; price: string; }
+  interface MenuCategory { emoji: string; name: string; items: MenuItem[]; note?: string }
+  const menuData: Record<string, MenuCategory> = {
     burrito: {
       emoji: "🌯",
       name: "BURRITO",
@@ -243,32 +299,32 @@ export const Desktop = (): JSX.Element => {
     }
   };
 
-  // Food carousel images
+  // Food carousel images (transparent PNGs in /public)
+  // Using encoded spaces to avoid issues with URLs
   const foodImages = [
     {
-      src: "https://images.pexels.com/photos/7613568/pexels-photo-7613568.jpeg?auto=compress&cs=tinysrgb&w=600",
-      alt: "Quesadilla",
-      title: "Quesadilla"
+      src: "/Food%20Image.png",
+      alt: "Lungi annos 1",
+      title: "Lungi Annos 1",
+      gradient: "from-orange-50 via-amber-50 to-rose-50"
     },
     {
-      src: "https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=600",
-      alt: "Tacos standing next to each other",
-      title: "Tacos"
+      src: "/Food%20Image%20(1).png",
+      alt: "Lungi annos 2",
+      title: "Lungi Annos 2",
+      gradient: "from-rose-50 via-orange-50 to-yellow-50"
     },
     {
-      src: "https://images.pexels.com/photos/7613568/pexels-photo-7613568.jpeg?auto=compress&cs=tinysrgb&w=600",
-      alt: "Burrito filled on a plate",
-      title: "Burrito"
+      src: "/Food%20Image%20(2).png",
+      alt: "Lungi annos 3",
+      title: "Lungi Annos 3",
+      gradient: "from-yellow-50 via-orange-50 to-amber-100"
     },
     {
-      src: "https://images.pexels.com/photos/5737241/pexels-photo-5737241.jpeg?auto=compress&cs=tinysrgb&w=600",
-      alt: "Mexican nachos",
-      title: "Nachos"
-    },
-    {
-      src: "https://images.pexels.com/photos/2087748/pexels-photo-2087748.jpeg?auto=compress&cs=tinysrgb&w=600",
-      alt: "Mexican guacamole",
-      title: "Guacamole"
+      src: "/Food%20Image%20(3).png",
+      alt: "Lungi annos 4",
+      title: "Lungi Annos 4",
+      gradient: "from-amber-50 via-rose-50 to-orange-50"
     }
   ];
 
@@ -518,34 +574,69 @@ export const Desktop = (): JSX.Element => {
           </p>
 
           {/* Food Carousel */}
-          <div className="relative max-w-4xl mx-auto">
-            <div className="overflow-hidden rounded-3xl shadow-2xl">
-              <div 
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          <div className="relative max-w-5xl mx-auto py-4">
+            {/* Blending background layer (extended & smoother fade) */}
+            <div
+              className="absolute -inset-x-64 -inset-y-24 -z-10 opacity-80 pointer-events-none
+              [mask-image:radial-gradient(circle_at_center,black_0%,black_55%,rgba(0,0,0,0.85)_70%,transparent_96%)]
+              bg-[radial-gradient(circle_at_32%_34%,rgba(255,195,120,0.30),transparent_62%),
+                  radial-gradient(circle_at_70%_66%,rgba(255,150,60,0.22),transparent_68%),
+                  linear-gradient(to_bottom,rgba(255,246,232,0.85),rgba(255,255,255,0.95))]" />
+            <div className="overflow-hidden select-none">
+              <div
+                ref={carouselTrackRef}
+                className={`flex transition-transform ${dragState.dragging ? 'duration-0' : 'duration-500'} ease-in-out cursor-${dragState.dragging ? 'grabbing' : 'grab'}`}
+                style={{
+                  transform: (() => {
+                    const base = -currentSlide * 100;
+                    if (!dragState.dragging) return `translateX(${base}%)`;
+                    const deltaPx = dragState.currentX - dragState.startX;
+                    // resistance on bounds
+                    let effectiveDelta = deltaPx;
+                    if ((dragState.slideStart === 0 && deltaPx > 0) || (dragState.slideStart === foodImages.length - 1 && deltaPx < 0)) {
+                      effectiveDelta = deltaPx * 0.35; // resistance factor
+                    }
+                    const deltaPercent = (effectiveDelta / dragState.width) * 100;
+                    return `translateX(${base + deltaPercent}%)`;
+                  })()
+                }}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerCancel={handlePointerUp}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
               >
                 {foodImages.map((image, index) => (
                   <div
                     key={index}
-                    className="w-full flex-shrink-0 relative"
                     aria-label={image.title}
+                    className={`w-full flex-shrink-0 relative flex items-center justify-center group py-6 px-2`}
                   >
-                    <img
-                      className="w-full h-64 md:h-80 lg:h-96 object-cover"
-                      alt={image.alt}
-                      src={image.src}
-                      loading="lazy"
-                    />
+                    <div className="relative w-full h-[22rem] md:h-[26rem] lg:h-[32rem] flex items-center justify-center overflow-hidden rounded-[2.5rem]">
+                      {/* Layered gradient background */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${image.gradient} opacity-60`} />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_30%,rgba(255,255,255,0.85),rgba(255,255,255,0)_55%)] mix-blend-overlay" />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,170,0,0.18),transparent_70%)]" />
+                      {/* Soft animated blobs */}
+                      <div className="absolute -left-12 top-12 w-72 h-72 rounded-full bg-orange-300/25 blur-3xl animate-float-soft" />
+                      <div className="absolute -right-10 bottom-10 w-60 h-60 rounded-full bg-rose-300/25 blur-3xl animate-float-soft [animation-delay:2.8s]" />
+                      {/* Image */}
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        loading="lazy"
+                        className="relative z-10 max-h-full w-auto object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.26,1)] group-hover:scale-[1.055] select-none pointer-events-none animate-float-soft"
+                        draggable={false}
+                      />
+                      {/* Hover glow */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-700 bg-[radial-gradient(circle_at_center,rgba(255,200,120,0.28),transparent_70%)]" />
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-            
-            {/* Stock photo disclaimer */}
-            <p className="text-xs text-gray-500 text-center mt-2 opacity-70">
-              *Stock images for illustration purposes
-            </p>
-
             {/* Navigation Arrows */}
             <button
               onClick={prevSlide}
@@ -588,17 +679,20 @@ export const Desktop = (): JSX.Element => {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`relative overflow-hidden rounded-lg transition-all duration-200 ${
+                  className={`relative overflow-hidden rounded-xl transition-all duration-300 bg-white/40 backdrop-blur-sm shadow-inner px-1 pt-1 pb-2 flex items-center justify-center ${
                     index === currentSlide 
-                      ? 'ring-4 ring-orange-500 scale-105' 
+                      ? 'scale-110 shadow-[0_0_0_3px_rgba(255,140,0,0.4),0_8px_18px_-4px_rgba(0,0,0,0.25)]' 
                       : 'hover:scale-105 opacity-70 hover:opacity-100'
                   }`}
                 >
                   <img
                     src={image.src}
                     alt={image.alt}
-                    className="w-20 h-16 object-cover"
+                    className="w-20 h-16 object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.25)]"
                   />
+                  {index === currentSlide && (
+                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(255,200,0,0.25),transparent_70%)]" />
+                  )}
                 </button>
               ))}
             </div>
@@ -737,26 +831,31 @@ export const Desktop = (): JSX.Element => {
                     </div>
                   </div>
 
-                  {/* Wolt */}
-                  <div className="bg-white/90 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                    <div className="text-center">
-                      <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <span className="text-white text-3xl font-bold">W</span>
+                  {/* Wolt (same aspect style, 100px narrower) */}
+                  <div className="relative">
+                    <div className="w-[calc(100%-100px)] max-w-full mx-auto bg-gradient-to-br from-blue-900/85 via-blue-800/80 to-cyan-800/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-white/10 overflow-hidden">
+                      {/* Background accents */}
+                      <div className="absolute -top-12 -right-12 w-48 h-48 bg-cyan-400/20 rounded-full blur-3xl" />
+                      <div className="absolute -bottom-16 -left-16 w-56 h-56 bg-blue-500/20 rounded-full blur-3xl" />
+                      <div className="text-center relative z-10">
+                        <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-6 shadow-lg ring-2 ring-white/10">
+                          <span className="text-white text-2xl font-extrabold tracking-wide">W</span>
+                        </div>
+                        <h4 className="text-2xl font-bold text-white mb-4 leading-tight">Wolt</h4>
+                        <p className="text-blue-100/90 mb-6 font-medium">
+                          Luotettava toimitus ympäri Helsinkiä
+                        </p>
+                        <a
+                          href="#"
+                          className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-7 py-3 rounded-full font-semibold text-lg hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-cyan-300/50"
+                        >
+                          <span>🛵</span>
+                          Tilaa Woltista
+                        </a>
+                        <p className="text-xs text-blue-100/70 mt-3 tracking-wide uppercase">
+                          Tulossa pian
+                        </p>
                       </div>
-                      <h4 className="text-2xl font-bold text-gray-800 mb-4">Wolt</h4>
-                      <p className="text-gray-600 mb-6">
-                        Luotettava toimitus ympäri Helsinkiä
-                      </p>
-                      <a
-                        href="#"
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 shadow-lg hover:shadow-xl"
-                      >
-                        <span>🛵</span>
-                        Tilaa Woltista
-                      </a>
-                      <p className="text-sm text-gray-500 mt-3">
-                        Tulossa pian!
-                      </p>
                     </div>
                   </div>
                 </div>

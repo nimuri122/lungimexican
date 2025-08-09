@@ -71,12 +71,26 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "spin-slow": {
+          to: { transform: "rotate(360deg)" },
+        },
+        "pulse-soft": {
+          '0%, 100%': { opacity: '0.35' },
+          '50%': { opacity: '0.9' },
+        },
+        "float-soft": {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-12px)' },
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         float: "float 10s linear infinite",
         glow: "glow 3s infinite alternate",
+        "spin-slow": "spin-slow 22s linear infinite",
+        "pulse-soft": "pulse-soft 5s ease-in-out infinite",
+        "float-soft": "float-soft 9s ease-in-out infinite"
       },
     },
     container: { center: true, padding: "2rem", screens: { "2xl": "1400px" } },
