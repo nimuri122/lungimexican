@@ -6,40 +6,13 @@ import { CountdownTimer } from "../../components/CountdownTimer";
 
 export const Desktop = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true);
-  const [cookieChecked, setCookieChecked] = useState(false);
-  const [hasConsent, setHasConsent] = useState(false);
 
-  // Initial loading & cookie consent gate
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('cookieConsent');
-      if (stored === 'accepted') {
-        setHasConsent(true);
-        // Optionally keep a brief loading spinner for aesthetic; shorten duration
-        const timer = setTimeout(() => setIsLoading(false), 600);
-        setCookieChecked(true);
-        return () => clearTimeout(timer);
-      } else {
-        // Wait for user consent (keep loading screen until accepted)
-        setCookieChecked(true);
-      }
-    } catch {
-      // Fallback: if localStorage unavailable, proceed normally
-      const timer = setTimeout(() => setIsLoading(false), 1500);
-      setCookieChecked(true);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
   }, []);
-
-  const acceptCookies = () => {
-    try { localStorage.setItem('cookieConsent', 'accepted'); } catch {}
-    setHasConsent(true);
-    setIsLoading(false);
-  };
-
-  const exitSite = () => {
-    window.location.href = 'https://www.google.com';
-  };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -68,14 +41,15 @@ export const Desktop = (): JSX.Element => {
     },
   ];
 
-  // (Opening times array removed – was unused)
-
-  // Types for menu structure
-  interface MenuItem { name: string; description: string; price: string; }
-  interface MenuCategory { emoji: string; name: string; items: MenuItem[]; note?: string }
+  // Opening times from the image
+  const openingTimes = [
+    { day: "Ma-Pe", time: "10.30-21.00" },
+    { day: "La", time: "11.00-22.00" },
+    { day: "Su", time: "11.00-21.00" },
+  ];
 
   // Menu data from the image
-  const menuData: Record<string, MenuCategory> = {
+  const menuData = {
     burrito: {
       emoji: "🌯",
       name: "BURRITO",
@@ -385,49 +359,21 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <React.Fragment>
-  <div className="bg-[#f6d590] min-h-screen w-full overflow-x-hidden">
-      {isLoading && cookieChecked && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590]">
-          <div className="relative w-full max-w-xl mx-auto px-6">
-            <div className="flex flex-col items-center text-center">
-              <img
-                src="/Group 7 (1).png"
-                alt="Lungi Restaurant Logo"
-                className="h-28 w-auto mx-auto mb-6 animate-pulse"
-              />
-              <div className="w-14 h-14 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin mb-8"></div>
-              {!hasConsent && (
-                <div className="w-full backdrop-blur-md bg-white/40 border border-white/60 shadow-xl rounded-2xl p-6 md:p-8 animate-[reveal-up_0.7s_ease]">
-                  <h2 className="text-xl md:text-2xl font-keynord font-bold text-[#4a3c2b] mb-3">Cookie Notice</h2>
-                  <p className="text-sm md:text-base text-[#4a3c2b]/90 leading-relaxed mb-6">
-                    By entering this website you accept the use of essential cookies to improve performance and user experience.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <button
-                      onClick={acceptCookies}
-                      className="flex-1 relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-500 via-orange-600 to-amber-500 text-white font-semibold py-3 md:py-3.5 shadow-lg shadow-orange-500/30 transition-all duration-300 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 focus:ring-offset-[#f6d590] group"
-                      aria-label="Accept cookies and enter site"
-                    >
-                      <span className="relative z-10">Accept & Enter</span>
-                      <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </button>
-                    <button
-                      onClick={exitSite}
-                      className="flex-1 rounded-xl bg-white/70 hover:bg-white text-[#4a3c2b] font-semibold py-3 md:py-3.5 shadow-md border border-[#4a3c2b]/10 transition-all duration-300 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#4a3c2b] focus:ring-offset-2 focus:ring-offset-[#f6d590]"
-                      aria-label="Exit site"
-                    >
-                      Exit
-                    </button>
-                  </div>
-                  <p className="mt-4 text-[11px] md:text-xs text-[#4a3c2b]/70">We only use minimal, essential analytics cookies. You can leave any time.</p>
-                </div>
-              )}
-            </div>
+      <div className="bg-[#f6d590] min-h-screen w-full">
+      {isLoading && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
+          <div className="text-center">
+            <img
+              src="/Group 7 (1).png"
+              alt="Lungi Restaurant Logo"
+              className="h-32 w-auto mx-auto mb-8 animate-pulse"
+            />
+            <div className="w-16 h-16 border-4 border-t-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
           </div>
         </div>
       )}
       {/* Header section */}
-  <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-[linear-gradient(115deg,rgba(246,213,144,0.78)_0%,rgba(246,213,144,0.62)_55%,rgba(246,213,144,0.50)_100%)] supports-backdrop-blur:border-b border-[#f6d590]/60 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.08)]">
+      <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-orange-200 to-yellow-200 shadow-md">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -562,7 +508,7 @@ export const Desktop = (): JSX.Element => {
           {/* Countdown Timer */}
           <CountdownTimer />
           
-          <h1 className="font-bold text-[#4a3c2b] mb-6 font-keynord text-[clamp(2.1rem,6.5vw,3.75rem)] leading-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] mb-6 font-keynord">
             Tervetuloa LUNGIin!
           </h1>
           <p className="text-lg md:text-xl lg:text-2xl text-[#4a3c2b] mb-12 max-w-4xl mx-auto leading-relaxed">
@@ -579,14 +525,17 @@ export const Desktop = (): JSX.Element => {
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {foodImages.map((image, index) => (
-                  <div key={index} className="w-full flex-shrink-0 relative">
+                  <div
+                    key={index}
+                    className="w-full flex-shrink-0 relative"
+                    aria-label={image.title}
+                  >
                     <img
                       className="w-full h-64 md:h-80 lg:h-96 object-cover"
                       alt={image.alt}
                       src={image.src}
+                      loading="lazy"
                     />
-                    {/* Faint vignette overlay */}
-                    <div className="absolute inset-0 pointer-events-none [background:radial-gradient(circle_at_center,rgba(0,0,0,0)_60%,rgba(0,0,0,0.28))] mix-blend-multiply"></div>
                   </div>
                 ))}
               </div>
@@ -594,7 +543,7 @@ export const Desktop = (): JSX.Element => {
             
             {/* Stock photo disclaimer */}
             <p className="text-xs text-gray-500 text-center mt-2 opacity-70">
-              *Stock images for illustration purposes, actual images coming soon.
+              *Stock images for illustration purposes
             </p>
 
             {/* Navigation Arrows */}
@@ -658,7 +607,7 @@ export const Desktop = (): JSX.Element => {
 
         {/* Menu section */}
         <section id="menu" className="py-8">
-          <h2 className="font-bold text-[#4a3c2b] text-center mb-12 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
             Menu
           </h2>
 
@@ -749,7 +698,7 @@ export const Desktop = (): JSX.Element => {
 
         {/* Delivery Services Section */}
         <section className="py-8">
-          <h2 className="font-bold text-[#4a3c2b] text-center mb-12 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
             Tilaa kotiin
           </h2>
 
@@ -777,15 +726,14 @@ export const Desktop = (): JSX.Element => {
                         Nopea toimitus suoraan kotiovellesi
                       </p>
                       <a
-                        href="#"
+                        href="https://www.foodora.fi/restaurant/ojth/lungi-mexican-food"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-red-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-pink-600 hover:to-red-600 transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <span>🚚</span>
                         Tilaa Foodorasta
                       </a>
-                      <p className="text-sm text-gray-500 mt-3">
-                        Tulossa pian!
-                      </p>
                     </div>
                   </div>
 
@@ -831,7 +779,7 @@ export const Desktop = (): JSX.Element => {
 
         {/* Varaus / Takeaway section */}
         <section id="varaus-takeaway" className="py-8">
-          <h2 className="font-bold text-[#4a3c2b] text-center mb-12 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
             Varaus / Takeaway
           </h2>
 
@@ -863,7 +811,7 @@ export const Desktop = (): JSX.Element => {
         {/* About us section */}
         <section id="meista" className="py-8">
           <div className="max-w-6xl mx-auto">
-            <h2 className="font-bold text-[#4a3c2b] text-center mb-12 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
               Meistä
             </h2>
 
@@ -905,7 +853,7 @@ export const Desktop = (): JSX.Element => {
 
         {/* Address and contact section */}
         <section id="yhteystiedot" className="py-8">
-          <h2 className="font-bold text-[#4a3c2b] text-center mb-12 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
             Yhteystiedot
           </h2>
 
@@ -999,7 +947,7 @@ export const Desktop = (): JSX.Element => {
 
         {/* Social media section */}
         <section className="py-8 text-center">
-          <h2 className="font-bold text-[#4a3c2b] mb-8 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] mb-8">
             Seuraa meitä somessa!
           </h2>
 
@@ -1189,11 +1137,7 @@ export const Desktop = (): JSX.Element => {
                     const y = ((e.clientY - rect.top) / rect.height) * 100;
                     setCopyGlow(g => ({ ...g, x, y }));
                   }}
-                  className={`relative inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-4 text-sm md:text-base font-semibold text-white transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-orange-300 shadow-lg overflow-hidden group 
-                    ${copyFeedback 
-                      ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 animate-soft-pulse' 
-                      : 'bg-[linear-gradient(110deg,#ff7a18,45%,#ffb347,60%,#ff7a18)] bg-[length:200%_200%] animate-luxe-gradient animate-soft-pulse'}
-                    hover:scale-[1.03] active:scale-[0.97]`}
+                  className={`relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-sm md:text-base font-semibold text-white transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-lg overflow-hidden group ${copyFeedback ? 'bg-green-500' : 'bg-gradient-to-r from-orange-500 via-red-500 to-amber-500 hover:brightness-110'}`}
                   aria-live="polite"
                 >
                   {/* Dynamic light following cursor */}
@@ -1204,14 +1148,10 @@ export const Desktop = (): JSX.Element => {
                       opacity: copyGlow.active ? 1 : 0,
                     }}
                   />
-                  {/* Sheen sweep */}
-                  <span className="pointer-events-none absolute inset-0 overflow-hidden">
-                    <span className="absolute top-0 left-0 w-1/3 h-full opacity-0 group-hover:opacity-100 bg-gradient-to-r from-white/10 via-white/60 to-white/10 animate-sheen-sweep" />
-                  </span>
                   {/* Static subtle texture */}
-                  <span className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-500 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.28),transparent_65%)]" />
-                  <span className="relative text-base drop-shadow animate-reveal-up delay-[30ms]">{copyFeedback ? '✅' : '📋'}</span>
-                  <span className="relative tracking-wide drop-shadow-sm animate-reveal-up delay-[90ms]">
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-500 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_60%)]" />
+                  <span className="relative text-base drop-shadow">{copyFeedback ? '✅' : '📋'}</span>
+                  <span className="relative tracking-wide drop-shadow-sm">
                     {copyFeedback ? 'Copied to Clipboard!' : 'Copy Email'}
                   </span>
                 </button>
