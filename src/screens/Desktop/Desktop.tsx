@@ -385,7 +385,7 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <React.Fragment>
-      <div className="bg-[#f6d590] min-h-screen w-full">
+  <div className="bg-[#f6d590] min-h-screen w-full overflow-x-hidden">
       {isLoading && cookieChecked && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590]">
           <div className="relative w-full max-w-xl mx-auto px-6">
@@ -562,7 +562,7 @@ export const Desktop = (): JSX.Element => {
           {/* Countdown Timer */}
           <CountdownTimer />
           
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] mb-6 font-keynord">
+          <h1 className="font-bold text-[#4a3c2b] mb-6 font-keynord text-[clamp(2.1rem,6.5vw,3.75rem)] leading-tight">
             Tervetuloa LUNGIin!
           </h1>
           <p className="text-lg md:text-xl lg:text-2xl text-[#4a3c2b] mb-12 max-w-4xl mx-auto leading-relaxed">
@@ -658,7 +658,7 @@ export const Desktop = (): JSX.Element => {
 
         {/* Menu section */}
         <section id="menu" className="py-8">
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
+          <h2 className="font-bold text-[#4a3c2b] text-center mb-12 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
             Menu
           </h2>
 
@@ -749,7 +749,7 @@ export const Desktop = (): JSX.Element => {
 
         {/* Delivery Services Section */}
         <section className="py-8">
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
+          <h2 className="font-bold text-[#4a3c2b] text-center mb-12 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
             Tilaa kotiin
           </h2>
 
@@ -831,7 +831,7 @@ export const Desktop = (): JSX.Element => {
 
         {/* Varaus / Takeaway section */}
         <section id="varaus-takeaway" className="py-8">
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
+          <h2 className="font-bold text-[#4a3c2b] text-center mb-12 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
             Varaus / Takeaway
           </h2>
 
@@ -863,7 +863,7 @@ export const Desktop = (): JSX.Element => {
         {/* About us section */}
         <section id="meista" className="py-8">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
+            <h2 className="font-bold text-[#4a3c2b] text-center mb-12 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
               Meistä
             </h2>
 
@@ -905,7 +905,7 @@ export const Desktop = (): JSX.Element => {
 
         {/* Address and contact section */}
         <section id="yhteystiedot" className="py-8">
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
+          <h2 className="font-bold text-[#4a3c2b] text-center mb-12 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
             Yhteystiedot
           </h2>
 
@@ -999,7 +999,7 @@ export const Desktop = (): JSX.Element => {
 
         {/* Social media section */}
         <section className="py-8 text-center">
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] mb-8">
+          <h2 className="font-bold text-[#4a3c2b] mb-8 font-keynord text-[clamp(2rem,6vw,3.5rem)] leading-tight">
             Seuraa meitä somessa!
           </h2>
 
