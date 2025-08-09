@@ -20,6 +20,8 @@ export const Desktop = (): JSX.Element => {
   const [showContactPopup, setShowContactPopup] = useState(false);
   const [isPopupAnimating, setIsPopupAnimating] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
+  // Glow effect position for copy email button
+  const [copyGlow, setCopyGlow] = useState({ x: 50, y: 50, active: false });
 
   // Navigation menu items
   const navItems = [
@@ -371,7 +373,7 @@ export const Desktop = (): JSX.Element => {
         </div>
       )}
       {/* Header section */}
-      <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-orange-200 to-yellow-200 shadow-md">
+  <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-[linear-gradient(115deg,rgba(246,213,144,0.78)_0%,rgba(246,213,144,0.62)_55%,rgba(246,213,144,0.50)_100%)] supports-backdrop-blur:border-b border-[#f6d590]/60 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.08)]">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -1009,6 +1011,18 @@ export const Desktop = (): JSX.Element => {
             {/* Copyright */}
             <div className="text-center text-white/60 text-sm border-t border-white/20 pt-4 w-full">
               <p>&copy; 2025 LUNGI Mexican Food. Kaikki oikeudet pidätetään.</p>
+              {/* Website CTA Button (Footer) */}
+              <div className="mt-4 flex justify-center">
+                <button
+                  type="button"
+                  onClick={openContactPopup}
+                  className="group bg-white/15 hover:bg-white/25 text-white px-5 py-2 rounded-full backdrop-blur-sm border border-white/20 flex items-center gap-2 text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40"
+                >
+                  <span className="inline-flex items-center justify-center bg-white/20 rounded-full p-1 group-hover:rotate-12 transition-transform">⚡</span>
+                  <span className="hidden sm:inline">Want a website like this?</span>
+                  <span className="sm:hidden">Need a site?</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1037,6 +1051,115 @@ export const Desktop = (): JSX.Element => {
           />
         ))}
       </div>
+
+
+      {/* Contact Popup (Bottom on mobile, centered on desktop) */}
+      {showContactPopup && (
+        <div
+          className={`fixed inset-0 z-[9999] flex items-end md:items-center justify-center px-4 pb-8 md:p-4 transition-all duration-300 ease-out ${
+            isPopupAnimating ? 'bg-black/40 backdrop-blur-md' : 'bg-black/0 backdrop-blur-none'
+          }`}
+          onClick={closeContactPopup}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Website inquiry form"
+        >
+          <div
+            className={`relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${
+              isPopupAnimating
+                ? 'translate-y-0 md:scale-100 opacity-100 blur-none'
+                : 'translate-y-8 md:scale-95 opacity-0 blur-sm'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Gradient Header (enhanced) */}
+            <div className="relative overflow-hidden p-5 text-white bg-gradient-to-br from-orange-500 via-red-500 to-amber-500">
+              <div className="absolute -inset-8 opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.5),transparent_60%)]" />
+              <div className="flex items-start gap-3 relative z-10">
+                <div className="text-3xl leading-none animate-bounce drop-shadow">🚀</div>
+                <div className="pr-8">
+                  <h3 className="text-xl md:text-2xl font-extrabold tracking-tight drop-shadow-sm">Want a Website Like This?</h3>
+                  <p className="text-orange-50/90 text-[13px] font-medium mt-0.5">
+                    Modern • Fast • Conversion Focused
+                  </p>
+                </div>
+              </div>
+              <div className="h-0.5 mt-4 bg-gradient-to-r from-white/40 via-white/10 to-transparent rounded-full relative z-10" />
+              <button
+                onClick={closeContactPopup}
+                aria-label="Close popup"
+                className="absolute top-3 right-3 w-8 h-8 bg-white/15 hover:bg-white/25 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors z-20"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            {/* Body (enhanced) */}
+            <div className="p-5 space-y-5 bg-gradient-to-b from-white/80 to-white/95 backdrop-blur-md">
+              <p className="text-gray-700 text-sm leading-relaxed text-center font-medium">
+                We craft high‑performance, design‑driven websites that convert visitors into customers.
+              </p>
+              <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-2 gap-2 text-[11px] font-medium">
+                  <div className="flex items-center gap-1.5 bg-orange-50/80 border border-orange-100 rounded-md px-2 py-1 shadow-sm">
+                    <span className="text-[14px]">⚡</span> Fast Load
+                  </div>
+                  <div className="flex items-center gap-1.5 bg-orange-50/80 border border-orange-100 rounded-md px-2 py-1 shadow-sm">
+                    <span className="text-[14px]">📱</span> Mobile First
+                  </div>
+                  <div className="flex items-center gap-1.5 bg-orange-50/80 border border-orange-100 rounded-md px-2 py-1 shadow-sm">
+                    <span className="text-[14px]">🧭</span> SEO Ready
+                  </div>
+                  <div className="flex items-center gap-1.5 bg-orange-50/80 border border-orange-100 rounded-md px-2 py-1 shadow-sm">
+                    <span className="text-[14px]">🛠️</span> Easy Edits
+                  </div>
+                  <div className="flex items-center gap-1.5 bg-orange-50/80 border border-orange-100 rounded-md px-2 py-1 shadow-sm col-span-2">
+                    <span className="text-[14px]">🎨</span> Fully Custom Design To Your Brand & Needs
+                  </div>
+                  <div className="flex items-center gap-1.5 bg-orange-50/80 border border-orange-100 rounded-md px-2 py-1 shadow-sm col-span-2">
+                    <span className="text-[14px]">📈</span> Optimized for Local Discovery
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText('contact@titledcreations.tech').then(() => {
+                      setCopyFeedback(true);
+                      setTimeout(() => setCopyFeedback(false), 2000);
+                    });
+                  }}
+                  onMouseEnter={() => setCopyGlow(g => ({ ...g, active: true }))}
+                  onMouseLeave={() => setCopyGlow(g => ({ ...g, active: false }))}
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    setCopyGlow(g => ({ ...g, x, y }));
+                  }}
+                  className={`relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-sm md:text-base font-semibold text-white transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-lg overflow-hidden group ${copyFeedback ? 'bg-green-500' : 'bg-gradient-to-r from-orange-500 via-red-500 to-amber-500 hover:brightness-110'}`}
+                  aria-live="polite"
+                >
+                  {/* Dynamic light following cursor */}
+                  <span
+                    className={`pointer-events-none absolute -inset-px transition-opacity duration-500 mix-blend-screen`}
+                    style={{
+                      background: `radial-gradient(circle at ${copyGlow.x}% ${copyGlow.y}%, rgba(255,255,255,0.55), rgba(255,255,255,0.15) 35%, rgba(255,255,255,0) 70%)`,
+                      opacity: copyGlow.active ? 1 : 0,
+                    }}
+                  />
+                  {/* Static subtle texture */}
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-500 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_60%)]" />
+                  <span className="relative text-base drop-shadow">{copyFeedback ? '✅' : '📋'}</span>
+                  <span className="relative tracking-wide drop-shadow-sm">
+                    {copyFeedback ? 'Copied to Clipboard!' : 'Copy Email'}
+                  </span>
+                </button>
+                <p className="text-sm md:text-base font-semibold text-gray-700 text-center select-all">contact@titledcreations.tech</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Close main div before Analytics and fragment closing */}
     </div>
     <Analytics />
