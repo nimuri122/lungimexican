@@ -6,13 +6,40 @@ import { CountdownTimer } from "../../components/CountdownTimer";
 
 export const Desktop = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true);
+  const [cookieChecked, setCookieChecked] = useState(false);
+  const [hasConsent, setHasConsent] = useState(false);
 
+  // Initial loading & cookie consent gate
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
+    try {
+      const stored = localStorage.getItem('cookieConsent');
+      if (stored === 'accepted') {
+        setHasConsent(true);
+        // Optionally keep a brief loading spinner for aesthetic; shorten duration
+        const timer = setTimeout(() => setIsLoading(false), 600);
+        setCookieChecked(true);
+        return () => clearTimeout(timer);
+      } else {
+        // Wait for user consent (keep loading screen until accepted)
+        setCookieChecked(true);
+      }
+    } catch {
+      // Fallback: if localStorage unavailable, proceed normally
+      const timer = setTimeout(() => setIsLoading(false), 1500);
+      setCookieChecked(true);
+      return () => clearTimeout(timer);
+    }
   }, []);
+
+  const acceptCookies = () => {
+    try { localStorage.setItem('cookieConsent', 'accepted'); } catch {}
+    setHasConsent(true);
+    setIsLoading(false);
+  };
+
+  const exitSite = () => {
+    window.location.href = 'https://www.google.com';
+  };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -359,15 +386,43 @@ export const Desktop = (): JSX.Element => {
   return (
     <React.Fragment>
       <div className="bg-[#f6d590] min-h-screen w-full">
-      {isLoading && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
-          <div className="text-center">
-            <img
-              src="/Group 7 (1).png"
-              alt="Lungi Restaurant Logo"
-              className="h-32 w-auto mx-auto mb-8 animate-pulse"
-            />
-            <div className="w-16 h-16 border-4 border-t-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+      {isLoading && cookieChecked && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590]">
+          <div className="relative w-full max-w-xl mx-auto px-6">
+            <div className="flex flex-col items-center text-center">
+              <img
+                src="/Group 7 (1).png"
+                alt="Lungi Restaurant Logo"
+                className="h-28 w-auto mx-auto mb-6 animate-pulse"
+              />
+              <div className="w-14 h-14 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin mb-8"></div>
+              {!hasConsent && (
+                <div className="w-full backdrop-blur-md bg-white/40 border border-white/60 shadow-xl rounded-2xl p-6 md:p-8 animate-[reveal-up_0.7s_ease]">
+                  <h2 className="text-xl md:text-2xl font-keynord font-bold text-[#4a3c2b] mb-3">Cookie Notice</h2>
+                  <p className="text-sm md:text-base text-[#4a3c2b]/90 leading-relaxed mb-6">
+                    By entering this website you accept the use of essential cookies to improve performance and user experience.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <button
+                      onClick={acceptCookies}
+                      className="flex-1 relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-500 via-orange-600 to-amber-500 text-white font-semibold py-3 md:py-3.5 shadow-lg shadow-orange-500/30 transition-all duration-300 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 focus:ring-offset-[#f6d590] group"
+                      aria-label="Accept cookies and enter site"
+                    >
+                      <span className="relative z-10">Accept & Enter</span>
+                      <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
+                    <button
+                      onClick={exitSite}
+                      className="flex-1 rounded-xl bg-white/70 hover:bg-white text-[#4a3c2b] font-semibold py-3 md:py-3.5 shadow-md border border-[#4a3c2b]/10 transition-all duration-300 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#4a3c2b] focus:ring-offset-2 focus:ring-offset-[#f6d590]"
+                      aria-label="Exit site"
+                    >
+                      Exit
+                    </button>
+                  </div>
+                  <p className="mt-4 text-[11px] md:text-xs text-[#4a3c2b]/70">We only use minimal, essential analytics cookies. You can leave any time.</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
