@@ -415,7 +415,7 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <React.Fragment>
-      <div className="bg-[#f6d590] min-h-screen w-full">
+  <div className="bg-[#f6d590] min-h-screen w-full overflow-x-hidden">
       {isLoading && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f6d590] transition-opacity duration-500 ease-out opacity-100">
           <div className="text-center">
@@ -574,10 +574,10 @@ export const Desktop = (): JSX.Element => {
           </p>
 
           {/* Food Carousel */}
-          <div className="relative max-w-5xl mx-auto py-4">
+          <div className="relative max-w-5xl mx-auto py-4 overflow-hidden">
             {/* Blending background layer (extended & smoother fade) */}
             <div
-              className="absolute -inset-x-64 -inset-y-24 -z-10 opacity-80 pointer-events-none
+              className="absolute inset-x-0 md:-inset-x-64 -inset-y-24 -z-10 opacity-80 pointer-events-none
               [mask-image:radial-gradient(circle_at_center,black_0%,black_55%,rgba(0,0,0,0.85)_70%,transparent_96%)]
               bg-[radial-gradient(circle_at_32%_34%,rgba(255,195,120,0.30),transparent_62%),
                   radial-gradient(circle_at_70%_66%,rgba(255,150,60,0.22),transparent_68%),
@@ -831,13 +831,13 @@ export const Desktop = (): JSX.Element => {
                     </div>
                   </div>
 
-                  {/* Wolt (same aspect style, 100px narrower) */}
-                  <div className="relative">
-                    <div className="w-[calc(100%-100px)] max-w-full mx-auto bg-gradient-to-br from-blue-900/85 via-blue-800/80 to-cyan-800/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-white/10 overflow-hidden">
+                  {/* Wolt (fixed width, aspect ratio, scaling fixed) */}
+                  <div className="relative flex justify-center">
+                    <div className="w-[320px] md:w-[340px] lg:w-[360px] bg-gradient-to-br from-blue-900/85 via-blue-800/80 to-cyan-800/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-white/10 overflow-hidden flex flex-col items-center">
                       {/* Background accents */}
                       <div className="absolute -top-12 -right-12 w-48 h-48 bg-cyan-400/20 rounded-full blur-3xl" />
                       <div className="absolute -bottom-16 -left-16 w-56 h-56 bg-blue-500/20 rounded-full blur-3xl" />
-                      <div className="text-center relative z-10">
+                      <div className="text-center relative z-10 w-full">
                         <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-6 shadow-lg ring-2 ring-white/10">
                           <span className="text-white text-2xl font-extrabold tracking-wide">W</span>
                         </div>
