@@ -14,14 +14,12 @@ export const CountdownTimer: React.FC = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Features to cycle through on mobile
   const features = [
     { emoji: '🌮', text: 'Tuoreet Tacot' },
     { emoji: '🌯', text: 'Herkullisia Burritoja' },
     { emoji: '🎊', text: 'Avajaistarjouksia' },
   ];
 
-  // Check if mobile
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -33,27 +31,24 @@ export const CountdownTimer: React.FC = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Auto-cycle features on mobile
   useEffect(() => {
     if (isMobile) {
       const featureTimer = setInterval(() => {
         setIsTransitioning(true);
-        
-        // After fade out animation, change the feature
+
         setTimeout(() => {
           setCurrentFeatureIndex((prev) => (prev + 1) % features.length);
           setIsTransitioning(false);
-        }, 300); // Half of transition duration
-        
-      }, 3000); // Change every 3 seconds (increased for better readability)
+        }, 300);
+
+      }, 3000);
 
       return () => clearInterval(featureTimer);
     }
   }, [isMobile, features.length]);
 
   useEffect(() => {
-    // Target date: July 11, 2025, 10:30 Helsinki time (UTC+2 in summer)
-    const targetDate = new Date('2025-07-11T10:30:00+03:00'); // Helsinki summer time is UTC+3
+    const targetDate = new Date('2025-07-11T10:30:00+03:00');
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -104,7 +99,6 @@ export const CountdownTimer: React.FC = () => {
 
   return (
     <div className="text-center py-16 relative overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 text-4xl animate-bounce">🌮</div>
         <div className="absolute top-20 right-20 text-3xl animate-bounce" style={{ animationDelay: '0.5s' }}>🌯</div>
@@ -123,7 +117,6 @@ export const CountdownTimer: React.FC = () => {
           Helsinki, Suomi 🇫🇮
         </p>
 
-        {/* Countdown Display */}
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 max-w-6xl mx-auto mb-12">
           {timeUnits.map((unit, index) => (
             <div
@@ -131,24 +124,19 @@ export const CountdownTimer: React.FC = () => {
               className="relative group text-center"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              {/* Number */}
               <div className="relative text-6xl md:text-8xl lg:text-9xl font-bold text-[#4a3c2b] mb-2 font-sans tracking-tight drop-shadow-2xl transform hover:scale-110 transition-all duration-300 overflow-hidden">
                 <span className="relative inline-block">
                   <span className="relative z-10">{unit.value.toString().padStart(2, '0')}</span>
-                  {/* Moving lighting gradient - only visible within text */}
                   <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 transform translate-x-[-200%] animate-shine bg-clip-text text-transparent mix-blend-overlay"></span>
                 </span>
               </div>
-              {/* Label */}
               <div className="relative text-lg md:text-xl font-medium uppercase tracking-wider text-[#4a3c2b] opacity-80 drop-shadow-lg font-sans">
                 <span className="relative inline-block">
                   <span className="relative z-10">{unit.label}</span>
-                  {/* Moving lighting gradient for labels - only visible within text */}
                   <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 transform translate-x-[-200%] animate-shine-slow bg-clip-text text-transparent mix-blend-overlay"></span>
                 </span>
               </div>
-              
-              {/* Subtle glow effect on hover */}
+
               <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500">
                 <div className="w-full h-full bg-gradient-to-r from-orange-300 to-yellow-300 blur-2xl rounded-full"></div>
               </div>
@@ -156,19 +144,15 @@ export const CountdownTimer: React.FC = () => {
           ))}
         </div>
 
-        {/* Separator line */}
         <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-[#4a3c2b] to-transparent mx-auto mb-8 opacity-60"></div>
 
-        {/* Additional info */}
         <div className="max-w-2xl mx-auto mb-8">
           <h3 className="text-2xl md:text-3xl font-bold text-[#4a3c2b] mb-6 drop-shadow-lg font-sans">
             Mitä odottaa? 🎉
           </h3>
           <div className="bg-gradient-to-br from-orange-100 to-yellow-100 rounded-3xl p-8 shadow-xl border-none">
             {isMobile ? (
-              // Mobile: Single feature that auto-cycles
               <div className="text-center relative overflow-hidden">
-                {/* Background slide animation */}
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-200 via-yellow-200 to-orange-200 opacity-30 transform transition-transform duration-700 ease-in-out"
                      style={{ 
                        transform: `translateX(${isTransitioning ? '100%' : '0%'})` 
@@ -191,8 +175,7 @@ export const CountdownTimer: React.FC = () => {
                     {features[currentFeatureIndex].text}
                   </p>
                 </div>
-                
-                {/* Dots indicator */}
+
                 <div className="flex justify-center gap-2 mt-6">
                   {features.map((_, index) => (
                     <div
@@ -208,8 +191,7 @@ export const CountdownTimer: React.FC = () => {
                     />
                   ))}
                 </div>
-                
-                {/* Progress bar */}
+
                 <div className="mt-4 w-full bg-[#4a3c2b]/20 rounded-full h-1 overflow-hidden">
                   <div 
                     className="h-full bg-gradient-to-r from-[#4a3c2b] to-orange-500 rounded-full transition-all duration-75 ease-linear"
@@ -221,7 +203,6 @@ export const CountdownTimer: React.FC = () => {
                 </div>
               </div>
             ) : (
-              // Desktop: All features visible
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                 <div className="group">
                   <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">🌮</div>
@@ -240,7 +221,6 @@ export const CountdownTimer: React.FC = () => {
           </div>
         </div>
 
-        {/* Pulsing notification */}
         <div className="mt-8">
           <div className="inline-flex items-center gap-3 text-[#4a3c2b] font-medium animate-pulse drop-shadow-lg font-sans">
             <span className="w-3 h-3 bg-[#4a3c2b] rounded-full animate-ping opacity-75"></span>

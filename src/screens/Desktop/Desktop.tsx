@@ -20,9 +20,7 @@ export const Desktop = (): JSX.Element => {
   const [showContactPopup, setShowContactPopup] = useState(false);
   const [isPopupAnimating, setIsPopupAnimating] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
-  // Glow effect position for copy email button
   const [copyGlow, setCopyGlow] = useState({ x: 50, y: 50, active: false });
-  // Carousel drag state
   const [dragState, setDragState] = useState<{ dragging: boolean; startX: number; currentX: number; width: number; slideStart: number }>({
     dragging: false,
     startX: 0,
@@ -44,9 +42,9 @@ export const Desktop = (): JSX.Element => {
     setDragState(prev => {
       if (!prev.dragging) return prev;
       const deltaX = prev.currentX - prev.startX;
-      const threshold = prev.width * 0.15; // 15% swipe threshold
+      const threshold = prev.width * 0.15;
       if (deltaX > threshold && prev.slideStart > 0) {
-        prev.slideStart !== currentSlide && setCurrentSlide(prev.slideStart); // sync if changed externally
+        prev.slideStart !== currentSlide && setCurrentSlide(prev.slideStart);
         prev.slideStart > 0 && setCurrentSlide(prev.slideStart - 1);
       } else if (deltaX < -threshold && prev.slideStart < foodImages.length - 1) {
         prev.slideStart !== currentSlide && setCurrentSlide(prev.slideStart);
@@ -70,7 +68,6 @@ export const Desktop = (): JSX.Element => {
     endDrag();
   };
 
-  // Touch (iOS Safari passive listeners) fallback using pointer not strictly needed, but ensure support if pointer events not fired
   const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
     beginDrag(e.touches[0].clientX);
   };
@@ -82,7 +79,6 @@ export const Desktop = (): JSX.Element => {
     endDrag();
   };
 
-  // Navigation menu items
   const navItems = [
     { text: "Etusivu", id: "etusivu" },
     { text: "Menu", id: "menu" },
@@ -91,7 +87,6 @@ export const Desktop = (): JSX.Element => {
     { text: "Yhteystiedot", id: "yhteystiedot" },
   ];
 
-  // About us section content
   const aboutUsItems = [
     {
       question: "Rento, herkullinen ja täynnä tunnelmaa",
@@ -100,9 +95,6 @@ export const Desktop = (): JSX.Element => {
     },
   ];
 
-  // (Opening times data removed - unused)
-
-  // Menu data from the image
   interface MenuItem { name: string; description: string; price: string; }
   interface MenuCategory { emoji: string; name: string; items: MenuItem[]; note?: string }
   const menuData: Record<string, MenuCategory> = {
@@ -299,8 +291,6 @@ export const Desktop = (): JSX.Element => {
     }
   };
 
-  // Food carousel images (transparent PNGs in /public)
-  // Using encoded spaces to avoid issues with URLs
   const foodImages = [
     {
       src: "/Food%20Image.png",
@@ -328,7 +318,6 @@ export const Desktop = (): JSX.Element => {
     }
   ];
 
-  // Social media icons
   const socialIcons = [
     { 
       name: "Instagram", 
@@ -352,15 +341,13 @@ export const Desktop = (): JSX.Element => {
     },
   ];
 
-  // Auto-advance carousel
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % foodImages.length);
     }, 5000);
     return () => clearInterval(timer);
   }, [foodImages.length]);
-
-  // Helper functions
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -394,19 +381,18 @@ export const Desktop = (): JSX.Element => {
 
   const openContactPopup = () => {
     setShowContactPopup(true);
-    setIsPopupAnimating(false); // Start with animation false, useEffect will set it to true
+  setIsPopupAnimating(false);
   };
 
   const closeContactPopup = () => {
     setIsPopupAnimating(false);
     setTimeout(() => {
       setShowContactPopup(false);
-    }, 300); // Match the transition duration
+  }, 300);
   };
 
   useEffect(() => {
     if (showContactPopup) {
-      // Small delay to ensure the popup is mounted before animating
       setTimeout(() => {
         setIsPopupAnimating(true);
       }, 10);
@@ -428,11 +414,9 @@ export const Desktop = (): JSX.Element => {
           </div>
         </div>
       )}
-      {/* Header section */}
       <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-orange-200 to-yellow-200 shadow-md">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <div className="flex items-center">
               <img
                 src="/Group 7 (1).png"
@@ -441,7 +425,6 @@ export const Desktop = (): JSX.Element => {
               />
             </div>
 
-            {/* Desktop Navigation */}
             <nav className="hidden lg:flex space-x-8">
               {navItems.map((item, index) => (
                 <button
@@ -454,7 +437,6 @@ export const Desktop = (): JSX.Element => {
               ))}
             </nav>
 
-            {/* Mobile Menu Button */}
             <button 
               className="lg:hidden bg-orange-600 text-white p-3 rounded-lg hover:bg-orange-700 transition-colors duration-200"
               onClick={toggleMobileMenu}
@@ -481,7 +463,6 @@ export const Desktop = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Mobile Navigation Overlay */}
         <div 
           className={`lg:hidden fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ${
             isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
@@ -489,14 +470,12 @@ export const Desktop = (): JSX.Element => {
           onClick={closeMobileMenu}
         />
 
-        {/* Mobile Navigation Menu */}
         <div 
           className={`lg:hidden fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-gradient-to-b from-orange-100 to-yellow-100 shadow-2xl transform transition-transform duration-300 ease-in-out ${
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           <div className="p-6">
-            {/* Mobile Menu Header */}
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center">
                 <img
@@ -516,7 +495,6 @@ export const Desktop = (): JSX.Element => {
               </button>
             </div>
 
-            {/* Mobile Navigation Items */}
             <nav className="space-y-4">
               {navItems.map((item, index) => (
                 <button
@@ -532,7 +510,6 @@ export const Desktop = (): JSX.Element => {
               ))}
             </nav>
 
-            {/* Mobile Menu Footer */}
             <div className="mt-8 pt-6 border-t border-orange-200">
               <div className="text-center">
                 <p className="text-sm text-gray-600 mb-2">Seuraa meitä:</p>
@@ -559,9 +536,7 @@ export const Desktop = (): JSX.Element => {
       </header>
 
       <div className="container mx-auto px-4 space-y-16 pb-16">
-        {/* Welcome section */}
         <section id="etusivu" className="text-center py-8">
-          {/* Countdown Timer */}
           <CountdownTimer />
           
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] mb-6 font-keynord">
@@ -573,9 +548,7 @@ export const Desktop = (): JSX.Element => {
             mukavasti, mutta makua säästelemättä.
           </p>
 
-          {/* Food Carousel */}
           <div className="relative max-w-5xl mx-auto py-4 overflow-hidden">
-            {/* Blending background layer (extended & smoother fade) */}
             <div
               className="absolute inset-x-0 md:-inset-x-64 -inset-y-24 -z-10 opacity-80 pointer-events-none
               [mask-image:radial-gradient(circle_at_center,black_0%,black_55%,rgba(0,0,0,0.85)_70%,transparent_96%)]
@@ -591,10 +564,9 @@ export const Desktop = (): JSX.Element => {
                     const base = -currentSlide * 100;
                     if (!dragState.dragging) return `translateX(${base}%)`;
                     const deltaPx = dragState.currentX - dragState.startX;
-                    // resistance on bounds
                     let effectiveDelta = deltaPx;
                     if ((dragState.slideStart === 0 && deltaPx > 0) || (dragState.slideStart === foodImages.length - 1 && deltaPx < 0)) {
-                      effectiveDelta = deltaPx * 0.35; // resistance factor
+                      effectiveDelta = deltaPx * 0.35;
                     }
                     const deltaPercent = (effectiveDelta / dragState.width) * 100;
                     return `translateX(${base + deltaPercent}%)`;
@@ -615,14 +587,11 @@ export const Desktop = (): JSX.Element => {
                     className={`w-full flex-shrink-0 relative flex items-center justify-center group py-6 px-2`}
                   >
                     <div className="relative w-full h-[22rem] md:h-[26rem] lg:h-[32rem] flex items-center justify-center overflow-hidden rounded-[2.5rem]">
-                      {/* Layered gradient background */}
                       <div className={`absolute inset-0 bg-gradient-to-br ${image.gradient} opacity-60`} />
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_30%,rgba(255,255,255,0.85),rgba(255,255,255,0)_55%)] mix-blend-overlay" />
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,170,0,0.18),transparent_70%)]" />
-                      {/* Soft animated blobs */}
                       <div className="absolute -left-12 top-12 w-72 h-72 rounded-full bg-orange-300/25 blur-3xl animate-float-soft" />
                       <div className="absolute -right-10 bottom-10 w-60 h-60 rounded-full bg-rose-300/25 blur-3xl animate-float-soft [animation-delay:2.8s]" />
-                      {/* Image */}
                       <img
                         src={image.src}
                         alt={image.alt}
@@ -630,14 +599,12 @@ export const Desktop = (): JSX.Element => {
                         className="relative z-10 max-h-full w-auto object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.26,1)] group-hover:scale-[1.055] select-none pointer-events-none animate-float-soft"
                         draggable={false}
                       />
-                      {/* Hover glow */}
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-700 bg-[radial-gradient(circle_at_center,rgba(255,200,120,0.28),transparent_70%)]" />
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            {/* Navigation Arrows */}
             <button
               onClick={prevSlide}
               className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-orange-600 p-3 rounded-full shadow-lg hover:scale-110 transition-all duration-200 z-10"
@@ -657,7 +624,6 @@ export const Desktop = (): JSX.Element => {
               </svg>
             </button>
 
-            {/* Dot Indicators */}
             <div className="flex justify-center gap-2 mt-6">
               {foodImages.map((_, index) => (
                 <button
@@ -673,7 +639,6 @@ export const Desktop = (): JSX.Element => {
               ))}
             </div>
 
-            {/* Thumbnail Navigation */}
             <div className="hidden md:flex justify-center gap-4 mt-8">
               {foodImages.map((image, index) => (
                 <button
@@ -699,7 +664,6 @@ export const Desktop = (): JSX.Element => {
           </div>
         </section>
 
-        {/* Menu section */}
         <section id="menu" className="py-8">
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
             Menu
@@ -789,8 +753,7 @@ export const Desktop = (): JSX.Element => {
             </Card>
           </div>
         </section>
-
-        {/* Delivery Services Section */}
+        
         <section className="py-8">
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
             Tilaa kotiin
@@ -809,7 +772,6 @@ export const Desktop = (): JSX.Element => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Foodora */}
                   <div className="bg-white/90 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                     <div className="text-center">
                       <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -831,10 +793,10 @@ export const Desktop = (): JSX.Element => {
                     </div>
                   </div>
 
-                  {/* Wolt (fixed width, aspect ratio, scaling fixed) */}
+                  
                   <div className="relative flex justify-center">
                     <div className="w-[320px] md:w-[340px] lg:w-[360px] bg-gradient-to-br from-blue-900/85 via-blue-800/80 to-cyan-800/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-white/10 overflow-hidden flex flex-col items-center">
-                      {/* Background accents */}
+                      
                       <div className="absolute -top-12 -right-12 w-48 h-48 bg-cyan-400/20 rounded-full blur-3xl" />
                       <div className="absolute -bottom-16 -left-16 w-56 h-56 bg-blue-500/20 rounded-full blur-3xl" />
                       <div className="text-center relative z-10 w-full">
@@ -860,7 +822,6 @@ export const Desktop = (): JSX.Element => {
                   </div>
                 </div>
 
-                {/* Additional Info */}
                 <div className="mt-8 text-center">
                   <div className="bg-orange-100 rounded-2xl p-6">
                     <p className="text-lg text-orange-800 font-medium mb-2">
@@ -876,7 +837,6 @@ export const Desktop = (): JSX.Element => {
           </div>
         </section>
 
-        {/* Varaus / Takeaway section */}
         <section id="varaus-takeaway" className="py-8">
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
             Varaus / Takeaway
@@ -907,7 +867,6 @@ export const Desktop = (): JSX.Element => {
           </div>
         </section>
 
-        {/* About us section */}
         <section id="meista" className="py-8">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
@@ -939,7 +898,6 @@ export const Desktop = (): JSX.Element => {
           </div>
         </section>
 
-        {/* Decorative border */}
         <div className="w-full bg-gradient-to-r from-orange-400 via-red-500 to-orange-400 py-4 rounded-2xl">
           <div className="flex items-center justify-center space-x-4 md:space-x-8">
             {['🌮', '🌯', '🌶️', '🥑', '🌮', '🌯', '🌶️'].map((emoji, index) => (
@@ -950,17 +908,14 @@ export const Desktop = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Address and contact section */}
         <section id="yhteystiedot" className="py-8">
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] text-center mb-12 font-keynord">
             Yhteystiedot
           </h2>
 
-          {/* Address with Google Maps */}
           <Card className="bg-gradient-to-br from-orange-200 to-yellow-200 rounded-3xl border-none shadow-xl mb-8">
             <CardContent className="p-8 md:p-12">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                {/* Address Info */}
                 <div className="text-center lg:text-left">
                   <div className="w-24 h-24 md:w-32 md:h-32 bg-orange-500 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6 shadow-lg">
                     <span className="text-white text-3xl md:text-4xl">📍</span>
@@ -978,7 +933,6 @@ export const Desktop = (): JSX.Element => {
                   </a>
                 </div>
 
-                {/* Google Maps Embed */}
                 <div className="w-full">
                   <div className="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-lg">
                     <iframe
@@ -998,7 +952,6 @@ export const Desktop = (): JSX.Element => {
             </CardContent>
           </Card>
 
-          {/* Contact information */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
               <h3 className="text-2xl md:text-3xl font-bold text-[#4b4b4b] text-center mb-6 font-keynord">
@@ -1044,7 +997,6 @@ export const Desktop = (): JSX.Element => {
           </div>
         </section>
 
-        {/* Social media section */}
         <section className="py-8 text-center">
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4a3c2b] mb-8">
             Seuraa meitä somessa!
@@ -1073,11 +1025,9 @@ export const Desktop = (): JSX.Element => {
         </section>
       </div>
 
-      {/* Footer */}
       <footer className="bg-gradient-to-r from-orange-600 to-red-600 py-8 md:py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-center gap-8">
-            {/* Logo */}
             <div className="flex items-center justify-center mb-4">
               <img
                 src="/Snapchat.jpg"
@@ -1086,7 +1036,6 @@ export const Desktop = (): JSX.Element => {
               />
             </div>
             
-            {/* Social Media Links */}
             <div className="flex flex-col items-center gap-4">
               <h3 className="text-white text-lg font-medium">Seuraa meitä:</h3>
               <div className="flex gap-4">
@@ -1108,10 +1057,8 @@ export const Desktop = (): JSX.Element => {
               <p className="text-white/80 text-sm">@lungimexicanfood</p>
             </div>
             
-            {/* Copyright */}
             <div className="text-center text-white/60 text-sm border-t border-white/20 pt-4 w-full">
               <p>&copy; 2025 LUNGI Mexican Food. Kaikki oikeudet pidätetään.</p>
-              {/* Website CTA Button (Footer) */}
               <div className="mt-4 flex justify-center">
                 <button
                   type="button"
@@ -1128,7 +1075,6 @@ export const Desktop = (): JSX.Element => {
         </div>
       </footer>
 
-      {/* Floating Blurred Balls Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
         {Array.from({ length: 15 }).map((_, i) => (
           <div 
@@ -1151,9 +1097,7 @@ export const Desktop = (): JSX.Element => {
           />
         ))}
       </div>
-
-
-      {/* Contact Popup (Bottom on mobile, centered on desktop) */}
+      
       {showContactPopup && (
         <div
           className={`fixed inset-0 z-[9999] flex items-end md:items-center justify-center px-4 pb-8 md:p-4 transition-all duration-300 ease-out ${
@@ -1172,7 +1116,6 @@ export const Desktop = (): JSX.Element => {
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Gradient Header (enhanced) */}
             <div className="relative overflow-hidden p-5 text-white bg-gradient-to-br from-orange-500 via-red-500 to-amber-500">
               <div className="absolute -inset-8 opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.5),transparent_60%)]" />
               <div className="flex items-start gap-3 relative z-10">
@@ -1195,7 +1138,6 @@ export const Desktop = (): JSX.Element => {
                 </svg>
               </button>
             </div>
-            {/* Body (enhanced) */}
             <div className="p-5 space-y-5 bg-gradient-to-b from-white/80 to-white/95 backdrop-blur-md">
               <p className="text-gray-700 text-sm leading-relaxed text-center font-medium">
                 We craft high‑performance, design‑driven websites that convert visitors into customers.
@@ -1239,7 +1181,6 @@ export const Desktop = (): JSX.Element => {
                   className={`relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-sm md:text-base font-semibold text-white transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-lg overflow-hidden group ${copyFeedback ? 'bg-green-500' : 'bg-gradient-to-r from-orange-500 via-red-500 to-amber-500 hover:brightness-110'}`}
                   aria-live="polite"
                 >
-                  {/* Dynamic light following cursor */}
                   <span
                     className={`pointer-events-none absolute -inset-px transition-opacity duration-500 mix-blend-screen`}
                     style={{
@@ -1247,7 +1188,6 @@ export const Desktop = (): JSX.Element => {
                       opacity: copyGlow.active ? 1 : 0,
                     }}
                   />
-                  {/* Static subtle texture */}
                   <span className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-500 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_60%)]" />
                   <span className="relative text-base drop-shadow">{copyFeedback ? '✅' : '📋'}</span>
                   <span className="relative tracking-wide drop-shadow-sm">
@@ -1260,7 +1200,6 @@ export const Desktop = (): JSX.Element => {
           </div>
         </div>
       )}
-      {/* Close main div before Analytics and fragment closing */}
     </div>
     <Analytics />
     <SpeedInsights />
