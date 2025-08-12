@@ -1,3 +1,81 @@
+# ------------------------------
+# Secrets and sensitive files
+# ------------------------------
+# Env files (keep .env.example tracked)
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+*.env
+
+# Service accounts / credentials
+service-account.json
+firebase-adminsdk-*.json
+credentials.json
+secrets.json
+
+# Private keys & certificates
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.p12
+*.pfx
+*.jks
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+
+# Package/token configs that may contain auth tokens
+.npmrc
+.yarnrc
+.pnpmrc
+.netrc
+
+# Platform/project folders that may store IDs/tokens locally
+.vercel
+.firebase
+.config
+.netlify/state.json
+
+# ------------------------------
+# Node / Vite / build artifacts
+# ------------------------------
+node_modules/
+dist/
+build/
+.cache/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor/OS
+.DS_Store
+.AppleDouble
+.LSOverride
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+Thumbs.db
+
+# Misc
+*.swp
+*.swo
+*.tmp
+*.tmp.*
 # Logs
 logs
 *.log
